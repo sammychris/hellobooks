@@ -9,9 +9,9 @@ module.exports = (app) => {
   }));
 
   app.post('/api/user/signup', signUpController.create);
-  app.post('/api/user/signin', signInController.create);
+  app.post('/api/user/signin', signInController.signInUser);
   app.post('/api/addbook', bookController.create);
   app.get('/api/books', bookController.list);
   //app.get('/api/books/:id', bookController.list); //not working yet;
-  app.get('/api/user/:id', userController.retrieve);
+
 };
