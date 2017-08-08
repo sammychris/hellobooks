@@ -1,5 +1,6 @@
 const book = require('../models').books;
 
+
 module.exports = {
   create(req, res) {
     return book
@@ -19,10 +20,11 @@ module.exports = {
     .then(book => res.status(200).send(book))
     .catch(error => res.status(400).send(error));
   },
+
   modify(req, res){
     book.findById(req.params.id)
     .then(book => {
         return  book.update( req.body ).then(book => res.status(201).send(book))})
     .catch(error => res.send(error))
-  }
+  },
 };

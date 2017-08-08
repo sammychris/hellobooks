@@ -13,6 +13,7 @@ module.exports = (app) => {
   app.post('/api/addbook', bookController.create);
   app.get('/api/books', bookController.list);
   app.put('/api/books/:id', bookController.modify);
+  app.get('/api/users/:userId/books', userController.borrowedBooks);
   //app.get('/api/books/:id', bookController.list); //not working yet;
 
 };

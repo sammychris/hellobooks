@@ -1,4 +1,5 @@
 const user = require('../models').user;
+const bookHistory = require('../models').BookHistoryBorrowed;
 
 module.exports = {
  // POST - /users/signup
@@ -29,4 +30,14 @@ module.exports = {
     
     .catch(error => res.status(400).send(error));
   },
+  borrowedBooks(req, res){
+        return bookHistory.findAll({
+          where: {
+            userId: req.params.userId,
+            bookReturned: req.query.bookReturned
+          }
+    }) 
+    .then(bookHistory => res.status(200).send(bookHistory))
+    .catch(error => res.send(error))
+  }
 };
