@@ -1,6 +1,6 @@
 const user = require('../models').user;
 const bookHistory = require('../models').BookHistoryBorrowed;
-const books = require('../models').books;
+
 
 module.exports = {
 
@@ -42,7 +42,7 @@ module.exports = {
       }
     })
       .then(bookHistoryIns => res.status(200).send(bookHistoryIns))
-      .catch(error => res.send(error))
+      .catch(error => res.send(error));
   },
 
 
@@ -62,12 +62,13 @@ module.exports = {
         .catch(error => res.status(500).send(error));*/
 
     // working with the bookHistory Tables
+
     bookHistory.findOne({
       where: { userId: req.params.userId, bookId: req.body.bookId }
     })
       .then((result) => {
         if (result && !result.bookReturned) { // if this book exists in history and not returned
-          return res.status(201).send('You\'ve already borrowed this book')
+          return res.status(201).send('You\'ve already borrowed this book');
         }
         bookHistory.create({ userId, bookId })
           .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))

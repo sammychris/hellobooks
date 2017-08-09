@@ -1,6 +1,5 @@
 const book = require('../models').books;
 
-
 module.exports = {
   addBook(req, res) {
     return book
@@ -11,19 +10,19 @@ module.exports = {
         Quantity: req.body.Quantity,
         Description: req.body.Description,
       })
-      .then(book => res.status(201).send(book))
+      .then(result => res.status(201).send(result))
       .catch(error => res.status(400).send(error));
   },
   list(req, res) {
     return book
       .findAll()
-      .then(book => res.status(200).send(book))
+      .then(result => res.status(200).send(result))
       .catch(error => res.status(400).send(error));
   },
 
   modify(req, res) {
     book.findById(req.params.id)
-      .then(book => book.update(req.body).then(book => res.status(201).send(book)))
+      .then(book => book.update(req.body).then(processingresult => res.status(201).send(processingresult)))
       .catch(error => res.send(error));
   },
 };
