@@ -14,8 +14,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // Require our routes into the application.
 require('./server/routes')(app);
-app.get('/samuel',function(req,res){ return res.status(200).send('welcome samuel christopher')})
-
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 app.get('*', (req, res) => res.status(200).send({

@@ -1,9 +1,9 @@
-/*const user = require('./user');
+const user = require('./user');
 const book = require('./books');
 
 module.exports = {
-  user,
+  user, book
 };
-*/
+
 
 /// This should be an option /////
