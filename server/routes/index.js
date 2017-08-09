@@ -15,7 +15,6 @@ module.exports = (app) => {
   app.put('/api/books/:id', bookController.modify);
   app.get('/api/users/:userId/books', userController.getBorrowedBooks);
   app.post('/api/users/:userId/books', userController.borrowABook);
-  
-  //app.get('/api/books/:id', bookController.list); //not working yet;
 
+  // app.get('/api/books/:id', bookController.list); //not working yet;
 };

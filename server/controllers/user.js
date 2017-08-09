@@ -12,10 +12,9 @@ module.exports = {
       password: req.body.password,
       membership: req.body.membership,
     })
-      .then(user => res.status(201).send(user))
+      .then(createUser => res.status(201).send(createUser))
       .catch(error => res.status(400).send(error));
   },
-
 
 
   // signin user
@@ -25,15 +24,14 @@ module.exports = {
         username: req.body.username
       }
     })
-      .then((user) => {
-        if (!user) {
-          return res.status(201).send('user does not exist')
-        };
-        return res.status(201).send('me i am samuel')
+      .then((eachUser) => {
+        if (!eachUser) {
+          return res.status(201).send('user does not exist');
+        }
+        return res.status(201).send('me i am samuel');
       })
       .catch(error => res.status(400).send(error));
   },
-
 
 
   getBorrowedBooks(req, res) {
@@ -43,14 +41,13 @@ module.exports = {
         bookReturned: req.query.bookReturned
       }
     })
-      .then(bookHistory => res.status(200).send(bookHistory))
+      .then(bookHistoryIns => res.status(200).send(bookHistoryIns))
       .catch(error => res.send(error))
   },
 
 
-
-  //An API route that allow user to borrow a book
-  //POST: /api/users/<userId>/books
+  //  An API route that allow user to borrow a book
+  //  POST: /api/users/<userId>/books
   borrowABook(req, res) {
     const userId = req.params.userId;
     const bookId = req.body.bookId;
@@ -68,14 +65,13 @@ module.exports = {
     bookHistory.findOne({
       where: { userId: req.params.userId, bookId: req.body.bookId }
     })
-      .then(result => {
-        if (result && !result.bookReturned) {// if this book exists in history and not returned
+      .then((result) => {
+        if (result && !result.bookReturned) { // if this book exists in history and not returned
           return res.status(201).send('You\'ve already borrowed this book')
-        } else {
-          bookHistory.create({ userId, bookId })
-            .then(bookHistory => res.status(201).send(bookHistory))
-            .catch(error => res.status(400).send(error));
         }
+        bookHistory.create({ userId, bookId })
+          .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))
+          .catch(error => res.status(400).send(error));
       })
       .catch(error => res.status(500).send(error));
   }

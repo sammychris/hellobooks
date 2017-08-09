@@ -6,16 +6,13 @@ chai.use(chaiHttp);
 
 
 describe('Route', () => {
-  //it('should return a 200 response', function(done)){
-  //chai.get('/api/users/')
-  //}
-  it('should list ALL blobs on /blobs GET', function (done) {
+  // it('should return a 200 response', function(done)){
+  // chai.get('/api/users/')
+  // }
+  it('should list ALL blobs on /blobs GET', (done) => {
     chai.request(app)
       .get('/api/books')
-      .end(function (err, res) {
-        res.should.have.status(200);
-
-      });
+      .end((err, res) => { res.should.have.status(200); });
     done();
   });
 });
