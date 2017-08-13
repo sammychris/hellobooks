@@ -9,7 +9,7 @@ Technologies: Nodejs, Javascript ecs6, html, css, Twitter Bootstrap, Git, Expres
 Front-end is designed using Twitter Bootstrap and filled out with sample data (mostly lorem ipsum). A few animations/effects are programmed using jQuery.
 
 # Installation
-Install node and postgres
+$Install node and postgres
 Clone the repository git clone https://github.com/sammychris/hellobooks/
 Switch to project directory cd ../path/to/HelloBooks
 Install dependencies npm i
