@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon ./bin/www",
+    "start:dev": "nodemon ./server/bin/www",
     "test": "babel-node node_modules/mocha/bin/_mocha -- test/test.js",
-    "build": "babel server/src/ --watch --out-dir server/dist --presets es2015"
+    "build": "babel server/source/ --watch --out-dir server/dist --presets es2015"
   },
   "keywords": [],
   "author": "",

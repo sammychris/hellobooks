@@ -1,5 +1,6 @@
 const user = require('../models').user;
 const bookHistory = require('../models').BookHistoryBorrowed;
+const book = require('../models').books;
 
 
 module.exports = {
@@ -19,16 +20,12 @@ module.exports = {
 
   // signin user
   signInUser(req, res) {
-    user.findOne({
-      where: {
-        username: req.body.username
-      }
-    })
+    user.findOne({ where: { username: req.body.username, password: req.body.password } })
       .then((eachUser) => {
-        if (!eachUser) {
-          return res.status(201).send('user does not exist');
+        if (eachUser) { // Checking if user has already registered......
+          return res.status(200).send(eachUser);
         }
-        return res.status(201).send('me i am samuel');
+        return res.status(402).send('Wrong password or Username;');
       })
       .catch(error => res.status(400).send(error));
   },
@@ -52,28 +49,29 @@ module.exports = {
     const userId = req.params.userId;
     const bookId = req.body.bookId;
 
-    /*  books.findOne({  // checking for the book Quantity
-        where:{ id: req.body.id }
+    book.findOne({  // checking for the book Quantity
+      where: { id: req.body.id }
     })
-    .then(book => {
-        if(book.Quantity < 1){ // if Quantity is Less than 1
-            return res.status(201).send('This books is no longer Available')
-        }})
-        .catch(error => res.status(500).send(error));*/
+      .then((bookIns) => {
+        if (bookIns.Quantity < 1) { // if Quantity is Less than 1
+          return res.status(201).send('This books is no longer Available')
+        }
+        bookHistory.findOne({
+          where: { userId: req.params.userId, bookId: req.body.bookId }
+        })
+          .then((result) => {
+            if (result && !result.bookReturned) { // if this book exists in history and not returned
+              return res.status(201).send('You\'ve already borrowed this book');
+            }
+            bookHistory.create({ userId, bookId })
+              .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))
+              .catch(error => res.status(400).send(error));
+          })
+          .catch(error => res.status(500).send(error));
+      })
+      .catch((error) => res.status(500).send(error));
 
     // working with the bookHistory Tables
 
-    bookHistory.findOne({
-      where: { userId: req.params.userId, bookId: req.body.bookId }
-    })
-      .then((result) => {
-        if (result && !result.bookReturned) { // if this book exists in history and not returned
-          return res.status(201).send('You\'ve already borrowed this book');
-        }
-        bookHistory.create({ userId, bookId })
-          .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))
-          .catch(error => res.status(400).send(error));
-      })
-      .catch(error => res.status(500).send(error));
+
   }
-};
