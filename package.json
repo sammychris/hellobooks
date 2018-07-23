@@ -1,0 +1,35 @@
+{
+  "name": "HELLO-BOOKS",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./server/bin/www --exec babel-node -e js",
+    "test": "babel-node node_modules/mocha/bin/_mocha -- test",
+    "build": "babel server/source/ --watch --out-dir server/dist --presets es2015"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "body-parser": "^1.17.2",
+    "eslint-config-airbnb-base": "^11.3.1",
+    "eslint-plugin-import": "^2.7.0",
+    "express": "^4.15.3",
+    "jsonwebtoken": "^8.3.0",
+    "morgan": "^1.8.2",
+    "pg": "^7.0.2",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.4.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "chai": "^4.1.1",
+    "eslint": "^4.3.0",
+    "mocha": "^3.5.0",
+    "chai-http": "^2.0.1",
+    "nodemon": "^1.11.0"
+  }
+}
