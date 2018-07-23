@@ -7,7 +7,8 @@
     "start": "nodemon ./server/bin/www --exec babel-node -e js",
     "test": "babel-node node_modules/mocha/bin/_mocha -- test",
     "build": "babel server/source/ --watch --out-dir server/dist --presets es2015",
-    "lint": "eslint ./server"
+    "lint": "eslint ./server",
+    "lint:fix": "eslint ./server --fix"
   },
   "keywords": [],
   "author": "",
