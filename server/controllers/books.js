@@ -1,4 +1,4 @@
-const book = require('../models').books;
+import book from '../models/books';
 
 
 export default {
