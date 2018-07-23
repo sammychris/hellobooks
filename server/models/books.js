@@ -1,5 +1,5 @@
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const books = sequelize.define('books', {
     Tittle: { type: DataTypes.STRING, allowNull: false, },
     Author: { type: DataTypes.STRING, allowNull: false, },
@@ -7,11 +7,11 @@ module.exports = (sequelize, DataTypes) => {
     Quantity: { type: DataTypes.INTEGER, allowNull: false, },
     Description: { type: DataTypes.STRING, allowNull: false, },
   }, {
-    classMethods: {
-      associate: (models) => {
-        // associations can be defined here
+      classMethods: {
+        associate: (models) => {
+          // associations can be defined here
+        }
       }
-    }
-  });
+    });
   return books;
 };

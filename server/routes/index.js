@@ -1,12 +1,12 @@
 import user from '../controllers/user';
-import book from '../controllers/books';
+import books from '../controllers/books';
 import auth from '../MIDDLEWARE/authorize';
 
-const { createUser, signInUser } = user;
-const { addBook, list, modify, getBorrowedBooks, borrowABook } = book;
+const { createUser, signInUser, getBorrowedBooks, borrowABook } = user;
+const { addBook, list, modify } = books;
 
 
-module.exports = (app) => {
+export default (app) => {
   app.get('/api', (req, res) => res.status(200).send({
     message: 'Welcome to the Todos API!',
   }));

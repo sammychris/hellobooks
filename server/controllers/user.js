@@ -1,9 +1,9 @@
-const user = require('../models').user;
-const bookHistory = require('../models').BookHistoryBorrowed;
-const book = require('../models').books;
+import user from '../models/user';
+import bookHistory from '../models/bookHistory';
+import book from '../models/books';
 
 
-module.exports = {
+export default {
 
   // POST - /users/signup
   createUser(req, res, next) {

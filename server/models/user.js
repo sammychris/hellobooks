@@ -1,5 +1,5 @@
 
-module.exports = (sequelize, DataTypes) => {
+export default (sequelize, DataTypes) => {
   const user = sequelize.define('user', {
     email: { type: DataTypes.STRING, allowNull: false, },
     username: { type: DataTypes.STRING, allowNull: false, },
@@ -11,6 +11,6 @@ module.exports = (sequelize, DataTypes) => {
         // associations can be defined here
       }
     }
-  });
+    });
   return user;
 };

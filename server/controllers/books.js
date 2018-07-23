@@ -1,7 +1,7 @@
 const book = require('../models').books;
 
 
-module.exports = {
+export default {
   // POST - /users/signup
   addBook(req, res) {
     book.create({
