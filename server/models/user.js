@@ -7,10 +7,10 @@ export default (sequelize, DataTypes) => {
     membership: { type: DataTypes.STRING, allowNull: false, },
   }, {
     classMethods: {
-      associate: (models) => {
+        associate: (models) => { // eslint-disable-line
         // associations can be defined here
       }
     }
-    });
+  });
   return user;
 };
