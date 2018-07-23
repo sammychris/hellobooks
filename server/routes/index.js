@@ -1,8 +1,8 @@
 import signUpCrl from '../controllers/user';
 import signInCrl from '../controllers/user';
-import userCrl   from '../controllers/user';
-import bookCrl   from '../controllers/books';
-import auth      from '../MIDDLEWARE/authorize';
+import userCrl from '../controllers/user';
+import bookCrl from '../controllers/books';
+import auth from '../MIDDLEWARE/authorize';
 
 module.exports = (app) => {
   app.get('/api', (req, res) => res.status(200).send({
