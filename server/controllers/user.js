@@ -1,3 +1,4 @@
+import jwt from 'jsonwebtoken';
 import db from '../models';
 
 const { user, bookHistory, book } = db;
@@ -6,27 +7,33 @@ const { user, bookHistory, book } = db;
 export default {
 
   // POST - /users/signup
-  createUser(req, res, next) {
+  createUser(req, res) {
     return user.create({
       email: req.body.email,
       username: req.body.username,
       password: req.body.password,
       membership: req.body.membership,
     })
-      .then(createUser => res.status(201).send(createUser))
+      .then((createUser) => {
+        jwt.sign({ createUser }, 'userSecretKey', { expiresIn: '1h' }, (err, token) => {
+          if (err) return console.log(err);
+          res.status(201).json({ user: 'successfully registered', token });
+        })
+      })
       .catch(error => res.status(400).send(error));
-    next();
+
   },
 
 
   // signin user
   signInUser(req, res) {
+    process.env.SECRET_KEY = (req.body.admin) ? 'adminSecretKey' : 'userSecretKey';  // creating a token for either the user or admin
     return user.findOne({ where: { username: req.body.username, password: req.body.password } })
       .then((eachUser) => {
         if (eachUser) { // Checking if user has already registered......
           return res.status(200).send(eachUser);
         }
-        return res.status(402).send('Wrong password or Username;');
+        return res.status(401).send('Wrong password or Username;');
       })
       .catch(error => res.status(400).send(error));
   },

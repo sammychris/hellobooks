@@ -3,21 +3,41 @@ import jwt from 'jsonwebtoken';
 // const secret = process.env.TOKEN_SECRET;
 
 export default {
-  authorize(req, res, next) {
-    const auth = req.headers.authorization;
-    const token = req.body.token || req.headers['x-access-token'] || auth;
+
+  crToken(req, res) {
+    const code = (req.body.firstname) ? 201 : 202;
+    jwt.sign(req.payload, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
+      if (err) return console.log(err);
+      res.status(code).json({ signup: 'user successfully signedup', token });
+    });
+  },
+
+  // middleware to verification token for users
+  verifyUser(req, res, next) {
+    const { headers } = req;
+    const token = headers.authorization || headers['x-access-token'] || req.body.token;
     if (token) {
-      jwt.verify(token, 'bootcamp', (err, decoded) => {
-        console.log(err);
-        if (err) {
-          const reply = 'You are not signed in';
-          res.status(403).send({ message: reply });
-        } else {
-          userRole = decoded.role;
-        }
+      jwt.verify(token, 'userSecretKey', (err) => {
+        if (err) return res.status(403).send('Token Is Not Valid');
+        next();
       });
     } else {
-      res.status(412).send({ message: 'Token not provided' });
+      res.status(401).send('Token not provided');
     }
   },
+
+  // middleware to verification token for Admin
+  verifyAdmin(req, res, next) {
+    const { headers } = req;
+    const token = headers.authorization || headers['x-access-token'] || req.body.token;
+    if (token) {
+      jwt.verify(token, 'adminSecretKey', (err) => {
+        if (err) return res.status(403).send({ message: 'Token Is Not Valid' });
+        next();
+      });
+    } else {
+      res.status(401).send('Token not provided');
+    }
+  },
+
 };
