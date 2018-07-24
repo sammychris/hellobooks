@@ -3,7 +3,8 @@ import books from '../controllers/books';
 import auth from '../MIDDLEWARE/authorize';
 
 const { createUser, signInUser, getBorrowedBooks, borrowABook } = user;
-const { addBook, list, modify } = books;
+const { addBook, list, modify, returnAbook } = books;
+const { verifyUser, verifyAdmin } = auth;
 
 
 export default (app) => {
@@ -13,11 +14,13 @@ export default (app) => {
 
   app.post('/api/users/signup', createUser);
   app.post('/api/users/signin', signInUser);
-  app.post('/api/book', addBook);
-  app.get('/api/books', list);
-  app.put('/api/books/:id', modify);
-  app.get('/api/users/:userId/books', getBorrowedBooks);
-  app.post('/api/users/:userId/books', borrowABook);
+  app.get('/api/books', verifyUser, list);
+  app.post('/api/books', verifyAdmin, addBook);
+  app.put('/api/books/:id', verifyAdmin, modify);
+  app.post('/api/users/:userId/books', verifyUser, borrowABook);
+  //app.put('/api/users/:userId/books', verifyUser, returnAbook);
+  app.get('/api/users/:userId/books', verifyUser, getBorrowedBooks);
+
 
   // app.get('/api/books/:id', bookCrl.list); //not working yet;
 };
