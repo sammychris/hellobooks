@@ -2,7 +2,7 @@ import user from '../controllers/user';
 import books from '../controllers/books';
 import auth from '../middleware/authorize';
 
-const { createUser, signInUser, getBorrowedBooks, borrowABook, returnAbook } = user;
+const { createUser, signInUser, getBorrowedBooks, borrowABook, returnAbook, allUsers } = user;
 const { addBook, list, modify, findAbook } = books;
 const { verifyUser, verifyAdmin } = auth;
 
