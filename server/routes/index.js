@@ -3,7 +3,7 @@ import books from '../controllers/books';
 import auth from '../middleware/authorize';
 
 const { createUser, signInUser, getBorrowedBooks, borrowABook, returnAbook } = user;
-const { addBook, list, modify } = books;
+const { addBook, list, modify, findAbook } = books;
 const { verifyUser, verifyAdmin } = auth;
 
 
@@ -15,6 +15,7 @@ export default (app) => {
   app.post('/api/users/signup', createUser);
   app.post('/api/users/signin', signInUser);
   app.get('/api/books', verifyUser, list);
+  app.get('/api/books/:bookId', verifyUser, findAbook);
   app.post('/api/books', verifyAdmin, addBook);
   app.put('/api/books/:id', verifyAdmin, modify);
   app.post('/api/users/:userId/books', verifyUser, borrowABook);
