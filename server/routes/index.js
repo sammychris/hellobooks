@@ -21,4 +21,5 @@ export default (app) => {
   app.post('/api/users/:userId/books', verifyUser, borrowABook);
   app.put('/api/users/:userId/books', verifyUser, returnAbook);
   app.get('/api/users/:userId/books?', verifyUser, getBorrowedBooks);
+  app.get('/api/users/all', verifyAdmin, allUsers)
 };
