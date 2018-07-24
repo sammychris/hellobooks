@@ -29,15 +29,22 @@ export default {
   // signin user
   signInUser(req, res) {
     process.env.SECRET_KEY = (req.body.admin) ? 'adminSecretKey' : 'userSecretKey';  // creating a token for either the user or admin
-    return user.findOne({ where: { username: req.body.username, password: req.body.password } })
+    user.findOne({ where: { username: req.body.username, password: req.body.password } })
       .then((eachUser) => {
-        if (eachUser) return res.status(401).send('Wrong password or Username;');
+        if (!eachUser) return res.status(401).send('Wrong password or Username;');
         jwt.sign({ eachUser }, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
           if (err) return console.log(err);
           res.status(201).json({ user: 'loggedin successfully', token });
         });
       })
       .catch(() => res.status(401).send({ message: 'user not registered!' }));
+  },
+
+
+  allUsers(req, res){
+    return user.findAll()
+      .then(output => res.status(200).send(output))
+      .catch(error => res.status(400).send(error));
   },
 
 
