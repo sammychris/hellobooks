@@ -59,7 +59,7 @@ export default {
     const userId = req.params.userId;
     const bookId = req.body.bookId;
 
-    return book.findOne({ where: { id: req.body.id } })
+    return book.findOne({ where: { id: req.body.bookId } })
       .then((bookIns) => {
         if (bookIns.Quantity < 1) { // if Quantity is Less than 1
           return res.status(201).send('This books is no longer Available');
@@ -71,6 +71,26 @@ export default {
             if (result && !result.bookReturned) { // if this book exists in history and not returned
               return res.status(201).send('You\'ve already borrowed this book');
             }
+            bookIns.update({ Quantity : bookIns.Quantity-1 });
+            bookHistory.create({ userId, bookId })
+              .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))
+              .catch(error => res.status(400).send(error));
+          })
+          .catch(error => res.status(500).send(error));
+      })
+      .catch(error => res.status(500).send(error));
+  },
+
+  returnAbook(req, res) {
+    const userId = req.params.userId;
+    const bookId = req.body.bookId;
+
+    return book.findOne({ where: { id: req.body.id } })
+      .then((bookIns) => {
+        if (bookIns.Quantity < 1) return res.status(201).send( 'This books is no longer Available' );
+        bookHistory.findOne({ where: { userId: req.params.userId, bookId: req.body.bookId } })
+          .then((result) => {
+            if (result && !result.bookReturned) return res.status(201).send('You\'ve already borrowed this book');
             bookHistory.create({ userId, bookId })
               .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))
               .catch(error => res.status(400).send(error));
