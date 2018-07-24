@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import db from '../models';
 
-const { user, bookHistory, book } = db;
+const { user, BookHistoryBorrowed, book } = db;
+const bookHistory = BookHistoryBorrowed;
 
 
 export default {
@@ -30,7 +31,7 @@ export default {
     process.env.SECRET_KEY = (req.body.admin) ? 'adminSecretKey' : 'userSecretKey';  // creating a token for either the user or admin
     return user.findOne({ where: { username: req.body.username, password: req.body.password } })
       .then((eachUser) => {
-        if (!eachUser) return res.status(401).send('Wrong password or Username;');
+        if (eachUser) return res.status(401).send('Wrong password or Username;');
         jwt.sign({ eachUser }, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
           if (err) return console.log(err);
           res.status(201).json({ user: 'loggedin successfully', token });
@@ -44,7 +45,7 @@ export default {
     return bookHistory.findAll({
       where: {
         userId: req.params.userId,
-        bookReturned: req.query.bookReturned
+        bookReturned: req.query.return
       }
     })
       .then(bookHistoryInstance => res.status(200).send(bookHistoryInstance))
