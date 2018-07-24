@@ -8,7 +8,7 @@ export default {
     const token = req.body.token || req.headers['x-access-token'] || auth;
     if (token) {
       jwt.verify(token, 'bootcamp', (err, decoded) => {
-        console.log(err); // eslint-disable-line
+        console.log(err);
         if (err) {
           const reply = 'You are not signed in';
           res.status(403).send({ message: reply });

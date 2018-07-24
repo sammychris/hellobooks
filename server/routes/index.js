@@ -11,8 +11,8 @@ export default (app) => {
     message: 'Welcome to the Todos API!',
   }));
 
-  app.post('/api/user/signup', createUser);
-  app.post('/api/user/signin', signInUser);
+  app.post('/api/users/signup', createUser);
+  app.post('/api/users/signin', signInUser);
   app.post('/api/book', addBook);
   app.get('/api/books', list);
   app.put('/api/books/:id', modify);
