@@ -5,7 +5,7 @@ const { book } = db;
 export default {
   // POST - /users/signup
   addBook(req, res) {
-    book.create({
+    return book.create({
       Tittle: req.body.Tittle,
       Author: req.body.Author,
       Category: req.body.Category,
@@ -17,7 +17,7 @@ export default {
   },
 
   list(req, res) {
-    book
+    return book
       .findAll()
       .then(output => res.status(200).send(output))
       .catch(error => res.status(400).send(error));
@@ -25,7 +25,7 @@ export default {
 
 
   modify(req, res) {
-    book.findById(req.params.id)
+    return book.findById(req.params.id)
       .then(result => result.update(req.body).then(output => res.status(201).send(output)))
       .catch(error => res.send(error));
   },

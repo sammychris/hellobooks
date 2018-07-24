@@ -7,7 +7,7 @@ export default {
 
   // POST - /users/signup
   createUser(req, res, next) {
-    user.create({
+    return user.create({
       email: req.body.email,
       username: req.body.username,
       password: req.body.password,
@@ -21,7 +21,7 @@ export default {
 
   // signin user
   signInUser(req, res) {
-    user.findOne({ where: { username: req.body.username, password: req.body.password } })
+    return user.findOne({ where: { username: req.body.username, password: req.body.password } })
       .then((eachUser) => {
         if (eachUser) { // Checking if user has already registered......
           return res.status(200).send(eachUser);
@@ -33,7 +33,7 @@ export default {
 
 
   getBorrowedBooks(req, res) {
-    bookHistory.findAll({
+    return bookHistory.findAll({
       where: {
         userId: req.params.userId,
         bookReturned: req.query.bookReturned
@@ -50,7 +50,7 @@ export default {
     const userId = req.params.userId;
     const bookId = req.body.bookId;
 
-    book.findOne({ where: { id: req.body.id } })
+    return book.findOne({ where: { id: req.body.id } })
       .then((bookIns) => {
         if (bookIns.Quantity < 1) { // if Quantity is Less than 1
           return res.status(201).send('This books is no longer Available');
