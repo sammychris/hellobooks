@@ -29,4 +29,10 @@ export default {
       .then(result => result.update(req.body).then(output => res.status(201).send(output)))
       .catch(error => res.send(error));
   },
+
+  findAbook(req, res) {
+    return book.findById(req.params.bookId)
+      .then(result => res.status(200).send(result))
+      .catch(error => res.send(error));
+  },
 };
