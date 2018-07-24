@@ -4,14 +4,6 @@ import jwt from 'jsonwebtoken';
 
 export default {
 
-  crToken(req, res) {
-    const code = (req.body.firstname) ? 201 : 202;
-    jwt.sign(req.payload, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
-      if (err) return console.log(err);
-      res.status(code).json({ signup: 'user successfully signedup', token });
-    });
-  },
-
   // middleware to verification token for users
   verifyUser(req, res, next) {
     const { headers } = req;
