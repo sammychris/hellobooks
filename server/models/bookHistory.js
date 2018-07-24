@@ -1,6 +1,6 @@
 
 export default (sequelize, DataTypes) => {
-  const bookHistory = sequelize.define('bookHistory', {
+  const bookHistory = sequelize.define('BookHistoryBorrowed', {
     bookId: { type: DataTypes.INTEGER, allowNull: false },
     userId: { type: DataTypes.INTEGER, allowNull: false },
     bookReturned: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }
