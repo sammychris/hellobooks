@@ -2,8 +2,8 @@ import user from '../controllers/user';
 import books from '../controllers/books';
 import auth from '../middleware/authorize';
 
-const { createUser, signInUser, getBorrowedBooks, borrowABook } = user;
-const { addBook, list, modify, returnAbook } = books;
+const { createUser, signInUser, getBorrowedBooks, borrowABook, returnAbook } = user;
+const { addBook, list, modify } = books;
 const { verifyUser, verifyAdmin } = auth;
 
 
@@ -18,7 +18,7 @@ export default (app) => {
   app.post('/api/books', verifyAdmin, addBook);
   app.put('/api/books/:id', verifyAdmin, modify);
   app.post('/api/users/:userId/books', verifyUser, borrowABook);
-  //app.put('/api/users/:userId/books', verifyUser, returnAbook);
+  app.put('/api/users/:userId/books', verifyUser, returnAbook);
   app.get('/api/users/:userId/books?', verifyUser, getBorrowedBooks);
 
 
