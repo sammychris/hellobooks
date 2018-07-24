@@ -1,5 +1,6 @@
-import book from '../models/books';
+import db from '../models';
 
+const { book } = db;
 
 export default {
   // POST - /users/signup
@@ -16,7 +17,7 @@ export default {
   },
 
   list(req, res) {
-    return book
+    book
       .findAll()
       .then(output => res.status(200).send(output))
       .catch(error => res.status(400).send(error));

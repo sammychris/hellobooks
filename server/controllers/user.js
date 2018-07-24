@@ -1,6 +1,6 @@
-import user from '../models/user';
-import bookHistory from '../models/bookHistory';
-import book from '../models/books';
+import db from '../models';
+
+const { user, bookHistory, book } = db;
 
 
 export default {
