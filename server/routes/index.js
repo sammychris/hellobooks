@@ -1,6 +1,6 @@
 import user from '../controllers/user';
 import books from '../controllers/books';
-import auth from '../MIDDLEWARE/authorize';
+import auth from '../middleware/authorize';
 
 const { createUser, signInUser, getBorrowedBooks, borrowABook } = user;
 const { addBook, list, modify, returnAbook } = books;
@@ -8,6 +8,10 @@ const { verifyUser, verifyAdmin } = auth;
 
 
 export default (app) => {
+  app.get('/book?', (req, res) => {
+    res.send(req.query.return);
+  });
+
   app.get('/api', (req, res) => res.status(200).send({
     message: 'Welcome to the Todos API!',
   }));
@@ -19,7 +23,7 @@ export default (app) => {
   app.put('/api/books/:id', verifyAdmin, modify);
   app.post('/api/users/:userId/books', verifyUser, borrowABook);
   //app.put('/api/users/:userId/books', verifyUser, returnAbook);
-  app.get('/api/users/:userId/books', verifyUser, getBorrowedBooks);
+  app.get('/api/users/:userId/books?', getBorrowedBooks);
 
 
   // app.get('/api/books/:id', bookCrl.list); //not working yet;
