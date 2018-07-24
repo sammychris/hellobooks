@@ -64,14 +64,12 @@ export default {
         if (bookIns.Quantity < 1) { // if Quantity is Less than 1
           return res.status(201).send('This books is no longer Available');
         }
-        bookHistory.findOne({
-          where: { userId: req.params.userId, bookId: req.body.bookId }
-        })
+        bookHistory.findOne({ where: { userId, bookId } })
           .then((result) => {
             if (result && !result.bookReturned) { // if this book exists in history and not returned
               return res.status(201).send('You\'ve already borrowed this book');
             }
-            bookIns.update({ Quantity : bookIns.Quantity-1 });
+            bookIns.update({ Quantity : bookIns.Quantity-1 }); // UPDATE Quantity by decrement
             bookHistory.create({ userId, bookId })
               .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))
               .catch(error => res.status(400).send(error));
@@ -85,18 +83,16 @@ export default {
     const userId = req.params.userId;
     const bookId = req.body.bookId;
 
-    return book.findOne({ where: { id: req.body.id } })
-      .then((bookIns) => {
-        if (bookIns.Quantity < 1) return res.status(201).send( 'This books is no longer Available' );
-        bookHistory.findOne({ where: { userId: req.params.userId, bookId: req.body.bookId } })
-          .then((result) => {
-            if (result && !result.bookReturned) return res.status(201).send('You\'ve already borrowed this book');
-            bookHistory.create({ userId, bookId })
-              .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))
-              .catch(error => res.status(400).send(error));
-          })
-          .catch(error => res.status(500).send(error));
-      })
-      .catch(error => res.status(500).send(error));
+    return bookHistory.findOne({ where: {userId, bookId}})
+      .then((bookhis) => {
+          if ( bookhis.bookReturned ) return res.status(401).send('book already returned');
+          book.findById(bookId)
+            .then((result) => {
+              result.update({ Quantity: result.Quantity + 1 });
+              bookhis.update({ bookReturned: true });
+              return res.status(202).send({ result, message:'book successfully returned'});
+            })
+            .catch(err => res.status(404).send('invalid book id!'));
+      }).catch((err) => res.status(404).send('book was never borrowed by this user!'));
   }
 };
