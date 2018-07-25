@@ -55,6 +55,9 @@ const book = {
                     Description: 'This book is God\'s word, and most powerful gift too man.'
                 };
 
+const borrowBookById = { 
+						bookId : 5
+					};
 
 
 describe('Routes', () => {
@@ -231,6 +234,20 @@ describe('Routes', () => {
             	.put('/api/books/5')
                 .set('x-access-token', adminToken)
                 .send(book)
+                .end((err, res) => {
+                	 expect(err).to.be.null;
+                	 expect(res).to.have.headers;
+                	 expect(res).to.have.status(201);
+                	 expect(res).to.be.json;
+                	 done();
+                });
+        });
+
+	 	 it('GET Api -- user Should borrow a book', function (done) {
+            chai.request(app)
+            	.post('/api/users/5/books')
+                .set('x-access-token', userToken)
+                .send(borrowBookById)
                 .end((err, res) => {
                 	 expect(err).to.be.null;
                 	 expect(res).to.have.headers;
