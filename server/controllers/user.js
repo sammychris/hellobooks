@@ -15,7 +15,7 @@ export default {
                   { email: req.body.email }, { username: req.body.username }
               ]}
         }).then(result => {
-          if(result) return res.status(400).send('Username or email already registered!');
+          if(result) return res.status(400).send({ message: 'Username or email already registered!'});
           return user.create({
               email: req.body.email,
               username: req.body.username,
@@ -24,7 +24,7 @@ export default {
           }).then((createUser) => {
                jwt.sign({ createUser }, 'userSecretKey', { expiresIn: '1h' }, (err, token) => {
                   if (err) return console.log(err);
-                  res.status(201).json({ user: 'successfully registered', token });
+                  res.status(201).json({ user: 'successfully registered!', token });
                 });
               })
               .catch(error => res.status(400).send(error.message));
@@ -39,10 +39,10 @@ export default {
     process.env.SECRET_KEY = (req.body.admin) ? 'adminSecretKey' : 'userSecretKey';  // creating a token for either the user or admin
     user.findOne({ where: { username: req.body.username, password: req.body.password } })
       .then((eachUser) => {
-        if (!eachUser) return res.status(401).send('Wrong password or Username;');
+        if (!eachUser) return res.status(400).send('Wrong password or Username;');
         jwt.sign({ eachUser }, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
           if (err) return console.log(err);
-          res.status(201).json({ user: 'loggedin successfully', token });
+          res.status(202).json({ user: 'loggedin successfully', token });
         });
       })
       .catch(() => res.status(401).send({ message: 'user not registered!' }));

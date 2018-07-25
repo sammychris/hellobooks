@@ -8,7 +8,8 @@
     "test": "babel-node node_modules/mocha/bin/_mocha -- test",
     "build": "babel server/source/ --watch --out-dir server/dist --presets es2015",
     "lint": "eslint ./server",
-    "lint:fix": "eslint ./server --fix"
+    "lint:fix": "eslint ./server --fix",
+    "coverage": "babel-node ./node_modules/.bin/istanbul cover vii.js"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +22,7 @@
     "express": "^4.15.3",
     "jsonwebtoken": "^8.3.0",
     "morgan": "^1.8.2",
+    "nock": "^9.4.3",
     "pg": "^7.0.2",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.4.2",
@@ -32,6 +34,7 @@
     "chai": "^4.1.1",
     "chai-http": "^2.0.1",
     "eslint": "^4.19.1",
+    "istanbul": "^0.4.5",
     "mocha": "^3.5.0",
     "nodemon": "^1.11.0"
   }
