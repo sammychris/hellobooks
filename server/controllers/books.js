@@ -25,15 +25,18 @@ export default {
 
 
   modify(req, res) {
-    return book.findById(req.params.id)
-      .then(result => result.update(req.body).then(output => res.status(201).send(output)))
+    return book.findById(req.params.bookId)
+      .then(result => {
+        if(!result) return res.status(404).json('Invalid bookID');
+        return result.update(req.body).then(output => res.status(201).send(output))
+      })
       .catch(error => res.send(error));
   },
 
   findAbook(req, res) {
     return book.findById(req.params.bookId)
       .then(result => {
-        if(!result) return res.status(404).json('Invalid ID');
+        if(!result) return res.status(404).json('Invalid bookID');
         res.status(200).send(result)
       })
       .catch(error => res.send(error));
