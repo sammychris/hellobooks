@@ -14,12 +14,12 @@ export default (app) => {
 
   app.post('/api/users/signup', createUser);
   app.post('/api/users/signin', signInUser);
-  app.get('/api/books', verifyUser, list);
-  app.get('/api/books/:bookId', verifyUser, findAbook);
+  app.get('/api/books', verifyUser, list);                 // list all book
+  app.get('/api/books/:bookId', verifyUser, findAbook);   //find a book
   app.post('/api/books', verifyAdmin, addBook);
-  app.put('/api/books/:id', verifyAdmin, modify);
-  app.post('/api/users/:userId/books', verifyUser, borrowABook);
-  app.put('/api/users/:userId/books', verifyUser, returnAbook);
-  app.get('/api/users/:userId/books?', verifyUser, getBorrowedBooks);
-  app.get('/api/users/all', verifyAdmin, allUsers)
+  app.put('/api/books/:bookId', verifyAdmin, modify);
+  app.post('/api/users/:userId/books', verifyUser, borrowABook);        // user to borrow a book
+  app.put('/api/users/:userId/books', verifyUser, returnAbook);        // user to return a book
+  app.get('/api/users/:userId/books?', verifyUser, getBorrowedBooks); // user to view all borrowedbooks
+  app.get('/api/users/all', verifyAdmin, allUsers)                   // admin to view all users
 };

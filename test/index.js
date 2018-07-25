@@ -1,26 +1,5 @@
 import routes from './routes';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import middleware from './middleware';
 
 
 

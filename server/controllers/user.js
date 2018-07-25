@@ -27,9 +27,9 @@ export default {
                   res.status(201).json({ user: 'successfully registered!', token });
                 });
               })
-              .catch(error => res.status(400).send(error.message));
+              .catch(error => res.json(error));
           })
-        .catch( error => res.status(400).send(error));
+        .catch( error => res.status(400).json(error));
 
   },
 
@@ -37,15 +37,16 @@ export default {
   // signin user
   signInUser(req, res) {
     process.env.SECRET_KEY = (req.body.admin) ? 'adminSecretKey' : 'userSecretKey';  // creating a token for either the user or admin
-    user.findOne({ where: { username: req.body.username, password: req.body.password } })
+    const userC = (req.body.admin)? 'admin': 'user';
+    return user.findOne({ where: { username: req.body.username, password: req.body.password } })
       .then((eachUser) => {
-        if (!eachUser) return res.status(400).send('Wrong password or Username;');
+        if (!eachUser) return res.status(400).send({message:'Wrong password or Username!'});
         jwt.sign({ eachUser }, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
           if (err) return console.log(err);
-          res.status(202).json({ user: 'loggedin successfully', token });
+          res.status(202).send({ message: `${userC} loggedin successfully`, token });
         });
       })
-      .catch(() => res.status(401).send({ message: 'user not registered!' }));
+      .catch((err) => res.status(401).send({ message: 'user not registered!' }));
   },
 
   // admin to list all users
@@ -86,7 +87,7 @@ export default {
             }
             bookIns.update({ Quantity : bookIns.Quantity-1 }); // UPDATE Quantity by decrement
             bookHistory.create({ userId, bookId })
-              .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))
+              .then(bookHisT => res.status(201).send(bookHisT))
               .catch(error => res.status(400).send(error));
           })
           .catch(error => res.status(500).send(error));
