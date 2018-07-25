@@ -87,7 +87,7 @@ export default {
             }
             bookIns.update({ Quantity : bookIns.Quantity-1 }); // UPDATE Quantity by decrement
             bookHistory.create({ userId, bookId })
-              .then(bookHistoryIstance => res.status(201).send(bookHistoryIstance))
+              .then(bookHisT => res.status(201).send(bookHisT))
               .catch(error => res.status(400).send(error));
           })
           .catch(error => res.status(500).send(error));
