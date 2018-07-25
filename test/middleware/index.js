@@ -4,7 +4,9 @@ import app from '../../server/app';
 
 chai.use(chaiHttp);
 const { expect } = chai;
-
+const borrowBookById = { 
+						bookId : 5
+					};
 
 describe('verifyToken', () => {
 
@@ -52,6 +54,7 @@ describe('verifyToken', () => {
 		 chai.request(app)
             	.post('/api/users/5/books')
             	.set('x-access-token', process.env.admin)
+            	.send(borrowBookById)
                 .end((err, res) => {
                 	 expect(err).to.be.ok;
                 	 expect(res).to.have.headers;
