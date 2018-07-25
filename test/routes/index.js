@@ -26,9 +26,15 @@ const oldUser = {
 	password: '22384938999',
 };
 
-const admin = {
-	username: 'sammyddJmatins',
+const adminUser = {
+	username: 'sammatins',
 	password: '22384938999',
+	admin: true
+};
+
+const fakeAdmin = {
+	username:'dlkksjldjlsj0',
+	password: 'dldidkshdls',
 	admin: true
 }
 
@@ -95,8 +101,8 @@ describe('Routes', () => {
                 .end((err, res) => {
                     userToken = res.body.token;
                     expect(res.status).to.equal(202);
-                    expect(res.body).to.have.property('user')
-                        .eql('loggedin successfully');
+                    expect(res.body).to.have.property('message')
+                        .eql('user loggedin successfully');
                     expect(res.body).to.have.property('token');
                     done();
                 });
@@ -106,6 +112,32 @@ describe('Routes', () => {
             chai.request(app)
             	.post('/api/users/signin')
                 .send(fakeUser)
+                .end((err, res) => {
+                    expect(res.status).to.equal(400);
+                    expect(res.body).to.have.property('message')
+                        .eql('Wrong password or Username!');
+                    done();
+                });
+        });
+
+        it('POST Api -- Should signin admin', function (done) {
+            chai.request(app)
+            	.post('/api/users/signin')
+                .send(adminUser)
+                .end((err, res) => {
+                    adminToken = res.body.token;
+                    expect(res.status).to.equal(202);
+                    expect(res.body).to.have.property('message')
+                        .eql('admin loggedin successfully');
+                    expect(res.body).to.have.property('token');
+                    done();
+                });
+        });
+
+        it('POST Api -- Should not signin a fakeAdmin', function (done) {
+            chai.request(app)
+            	.post('/api/users/signin')
+                .send(fakeAdmin)
                 .end((err, res) => {
                     expect(res.status).to.equal(400);
                     expect(res.body).to.have.property('message')
