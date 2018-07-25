@@ -27,9 +27,9 @@ export default {
                   res.status(201).json({ user: 'successfully registered!', token });
                 });
               })
-              .catch(error => res.send(error.message));
+              .catch(error => res.json(error));
           })
-        .catch( error => res.status(400).send(error));
+        .catch( error => res.status(400).json(error));
 
   },
 

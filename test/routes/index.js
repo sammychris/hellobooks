@@ -58,6 +58,7 @@ describe('Routes', () => {
                 .send(newUser)
                 .end((err, res) => {
                     userToken = res.body.token;
+                    expect(err).to.be.null;
                     expect(res.status).to.equal(201);
                     expect(res).to.be.json;
                     expect(res.body).to.have.property('user')
@@ -74,6 +75,7 @@ describe('Routes', () => {
             	.type('form')
                 .send(newUser)
                 .end((err, res) => {
+                	expect(err).to.be.ok;
                     expect(res.status).to.equal(400);
                     expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
@@ -89,7 +91,8 @@ describe('Routes', () => {
                 .send(newUser)
                 .end((err, res) => {
                     userToken = res.body.token;
-                    expect(res.status).to.equal(400);
+                    expect(err).to.be.ok;
+                    expect(res).to.have.status(400);
                     expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
                         .eql('Username or email already registered!');
@@ -103,6 +106,7 @@ describe('Routes', () => {
                 .send(oldUser)
                 .end((err, res) => {
                     userToken = res.body.token;
+                    expect(err).to.be.null;
                     expect(res.status).to.equal(202);
                     expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
@@ -117,6 +121,7 @@ describe('Routes', () => {
             	.post('/api/users/signin')
                 .send(fakeUser)
                 .end((err, res) => {
+                	expect(err).to.be.ok;
                     expect(res.status).to.equal(400);
                     expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
@@ -131,6 +136,7 @@ describe('Routes', () => {
                 .send(adminUser)
                 .end((err, res) => {
                     adminToken = res.body.token;
+                    expect(err).to.be.null;
                     expect(res.status).to.equal(202);
                     expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
@@ -145,6 +151,7 @@ describe('Routes', () => {
             	.post('/api/users/signin')
                 .send(fakeAdmin)
                 .end((err, res) => {
+                	expect(err).to.be.ok;
                     expect(res.status).to.equal(400);
                     expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
@@ -178,6 +185,20 @@ describe('Routes', () => {
                 	 expect(res).to.have.headers;
                 	 expect(res).to.have.status(200);
                 	 expect(res).to.be.json;
+                	 done();
+                });
+        });
+
+	 	 it('GET Api -- Should find Invalid book Id', function (done) {
+            chai.request(app)
+            	.get('/api/books/500')
+                .set('x-access-token', userToken)
+                .end((err, res) => {
+                	 expect(err).to.be.ok;
+                	 expect(res).to.have.headers;
+                	 expect(res).to.have.status(404);
+                	 expect(res).to.be.json;
+                	 expect(res.body).to.equal('Invalid ID')
                 	 done();
                 });
         });
