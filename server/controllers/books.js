@@ -33,7 +33,7 @@ export default {
   findAbook(req, res) {
     return book.findById(req.params.bookId)
       .then(result => {
-        if(!result) return res.status(404).send('Invalid ID');
+        if(!result) return res.status(404).json('Invalid ID');
         res.status(200).send(result)
       })
       .catch(error => res.send(error));
