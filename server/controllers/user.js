@@ -9,19 +9,27 @@ export default {
 
   // POST - /users/signup
   createUser(req, res) {
-    return user.create({
-      email: req.body.email,
-      username: req.body.username,
-      password: req.body.password,
-      membership: req.body.membership,
-    })
-      .then((createUser) => {
-        jwt.sign({ createUser }, 'userSecretKey', { expiresIn: '1h' }, (err, token) => {
-          if (err) return console.log(err);
-          res.status(201).json({ user: 'successfully registered', token });
-        });
-      })
-      .catch(error => res.status(400).send(error.message));
+    user.findOne({
+       where: { 
+          $or: [
+                  { email: req.body.email }, { username: req.body.username }
+              ]}
+        }).then(result => {
+          if(result) return res.status(400).send('Username or email already registered!');
+          return user.create({
+              email: req.body.email,
+              username: req.body.username,
+              password: req.body.password,
+              membership: req.body.membership,
+          }).then((createUser) => {
+               jwt.sign({ createUser }, 'userSecretKey', { expiresIn: '1h' }, (err, token) => {
+                  if (err) return console.log(err);
+                  res.status(201).json({ user: 'successfully registered', token });
+                });
+              })
+              .catch(error => res.status(400).send(error.message));
+          })
+        .catch( error => res.status(400).send(error));
 
   },
 
