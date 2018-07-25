@@ -66,6 +66,19 @@ describe('Routes', () => {
                 });
         });
 
+        it('POST Api -- Should not register a user twice ', function (done) {
+            chai.request(app)
+            	.post('/api/users/signup')
+            	.type('form')
+                .send(newUser)
+                .end((err, res) => {
+                    expect(res.status).to.equal(400);
+                    expect(res.body).to.have.property('message')
+                        .eql('Username or email already registered!');
+                    done();
+                });
+        });
+
          
     });
 });
