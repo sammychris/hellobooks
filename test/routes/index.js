@@ -256,6 +256,20 @@ describe('Routes', () => {
                 	 done();
                 });
         });
+
+
+	 	 it('GET Api -- user Should view allborrowed books by a user', function (done) {
+            chai.request(app)
+            	.get('/api/users/5/books?return=false')
+                .set('x-access-token', userToken)
+                .end((err, res) => {
+                	 expect(err).to.be.null;
+                	 expect(res).to.have.headers;
+                	 expect(res).to.have.status(200);
+                	 expect(res).to.be.json;
+                	 done();
+                });
+        });
 	 })
 
 });
