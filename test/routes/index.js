@@ -172,7 +172,7 @@ describe('Routes', () => {
    });
 
 	 describe('ENDPOINT FOR BOOKS and USERS...', function () {
-	 	 it('GET Api -- Should View allbooks', function (done) {
+	 	 it('GET Api -- user Should View allbooks', function (done) {
             chai.request(app)
             	.get('/api/books')
                 .set('x-access-token', userToken)
@@ -185,7 +185,7 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('GET Api -- Should find a book', function (done) {
+	 	 it('GET Api -- user Should find a book', function (done) {
             chai.request(app)
             	.get('/api/books/3')
                 .set('x-access-token', userToken)
@@ -198,7 +198,7 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('GET Api -- Should find Invalid book Id', function (done) {
+	 	 it('GET Api -- user Should find Invalid book Id', function (done) {
             chai.request(app)
             	.get('/api/books/500')
                 .set('x-access-token', userToken)
@@ -207,14 +207,28 @@ describe('Routes', () => {
                 	 expect(res).to.have.headers;
                 	 expect(res).to.have.status(404);
                 	 expect(res).to.be.json;
-                	 expect(res.body).to.equal('Invalid ID')
+                	 expect(res.body).to.equal('Invalid bookID')
                 	 done();
                 });
         });
 
-	 	 it('GET Api -- Should add a book', function (done) {
+	 	 it('GET Api -- admin Should add a book', function (done) {
             chai.request(app)
             	.post('/api/books')
+                .set('x-access-token', adminToken)
+                .send(book)
+                .end((err, res) => {
+                	 expect(err).to.be.null;
+                	 expect(res).to.have.headers;
+                	 expect(res).to.have.status(201);
+                	 expect(res).to.be.json;
+                	 done();
+                });
+        });
+
+	 	 it('GET Api -- admin Should modify a book', function (done) {
+            chai.request(app)
+            	.put('/api/books/5')
                 .set('x-access-token', adminToken)
                 .send(book)
                 .end((err, res) => {
