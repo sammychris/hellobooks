@@ -270,6 +270,19 @@ describe('Routes', () => {
                 	 done();
                 });
         });
+
+	 	 it('GET Api -- admin Should view all user', function (done) {
+            chai.request(app)
+            	.get('/api/users/all')
+                .set('x-access-token', adminToken)
+                .end((err, res) => {
+                	 expect(err).to.be.null;
+                	 expect(res).to.have.headers;
+                	 expect(res).to.have.status(200);
+                	 expect(res).to.be.json;
+                	 done();
+                });
+        });
 	 })
 
 });
