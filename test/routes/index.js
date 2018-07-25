@@ -59,6 +59,7 @@ describe('Routes', () => {
                 .end((err, res) => {
                     userToken = res.body.token;
                     expect(res.status).to.equal(201);
+                    expect(res).to.be.json;
                     expect(res.body).to.have.property('user')
                         .eql('successfully registered!');
                     expect(res.body).to.have.property('token');
@@ -74,6 +75,7 @@ describe('Routes', () => {
                 .send(newUser)
                 .end((err, res) => {
                     expect(res.status).to.equal(400);
+                    expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
                         .eql('Username or email already registered!');
                     done();
@@ -88,6 +90,7 @@ describe('Routes', () => {
                 .end((err, res) => {
                     userToken = res.body.token;
                     expect(res.status).to.equal(400);
+                    expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
                         .eql('Username or email already registered!');
                     done();
@@ -101,6 +104,7 @@ describe('Routes', () => {
                 .end((err, res) => {
                     userToken = res.body.token;
                     expect(res.status).to.equal(202);
+                    expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
                         .eql('user loggedin successfully');
                     expect(res.body).to.have.property('token');
@@ -114,6 +118,7 @@ describe('Routes', () => {
                 .send(fakeUser)
                 .end((err, res) => {
                     expect(res.status).to.equal(400);
+                    expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
                         .eql('Wrong password or Username!');
                     done();
@@ -127,6 +132,7 @@ describe('Routes', () => {
                 .end((err, res) => {
                     adminToken = res.body.token;
                     expect(res.status).to.equal(202);
+                    expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
                         .eql('admin loggedin successfully');
                     expect(res.body).to.have.property('token');
@@ -140,12 +146,28 @@ describe('Routes', () => {
                 .send(fakeAdmin)
                 .end((err, res) => {
                     expect(res.status).to.equal(400);
+                    expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
                         .eql('Wrong password or Username!');
                     done();
                 });
         });
 
-         
-    });
+   });
+
+	 describe('ENDPOINT FOR BOOKS and USERS...', function () {
+	 	 it('GET Api -- Should View allbooks', function (done) {
+            chai.request(app)
+            	.get('/api/user/books')
+                .set('x-access-token', userToken)
+                .end((err, res) => {
+                	 expect(err).to.be.null;
+                	 expect(res).to.have.headers;
+                	 expect(res).to.have.status(200);
+                	 expect(res).to.be.json;
+                	 done();
+                });
+        });
+	 })
+
 });
