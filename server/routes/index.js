@@ -14,8 +14,8 @@ export default (app) => {
 
   app.post('/api/users/signup', createUser);
   app.post('/api/users/signin', signInUser);
-  app.get('/api/books', verifyUser, list);
-  app.get('/api/books/:bookId', verifyUser, findAbook);
+  app.get('/api/books', verifyUser, list);                 // list all book
+  app.get('/api/books/:bookId', verifyUser, findAbook);   //find a book
   app.post('/api/books', verifyAdmin, addBook);
   app.put('/api/books/:id', verifyAdmin, modify);
   app.post('/api/users/:userId/books', verifyUser, borrowABook);

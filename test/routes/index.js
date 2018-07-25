@@ -158,7 +158,20 @@ describe('Routes', () => {
 	 describe('ENDPOINT FOR BOOKS and USERS...', function () {
 	 	 it('GET Api -- Should View allbooks', function (done) {
             chai.request(app)
-            	.get('/api/user/books')
+            	.get('/api/books')
+                .set('x-access-token', userToken)
+                .end((err, res) => {
+                	 expect(err).to.be.null;
+                	 expect(res).to.have.headers;
+                	 expect(res).to.have.status(200);
+                	 expect(res).to.be.json;
+                	 done();
+                });
+        });
+
+	 	 it('GET Api -- Should find a book', function (done) {
+            chai.request(app)
+            	.get('/api/books/3')
                 .set('x-access-token', userToken)
                 .end((err, res) => {
                 	 expect(err).to.be.null;
