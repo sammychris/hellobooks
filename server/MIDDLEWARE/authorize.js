@@ -10,7 +10,7 @@ export default {
     const token = headers.authorization || headers['x-access-token'] || req.body.token;
     if (token) {
       jwt.verify(token, 'userSecretKey', (err) => {
-        if (err) return res.status(403).json('Invalid Token');
+        if (err) return res.status(403).json('Token Is Not Valid');
         next();
       });
     } else {
@@ -24,7 +24,7 @@ export default {
     const token = headers.authorization || headers['x-access-token'] || req.body.token;
     if (token) {
       jwt.verify(token, 'adminSecretKey', (err) => {
-        if (err) return res.status(403).json({ message: 'Invalid Token' });
+        if (err) return res.status(403).json({ message: 'Token Is Not Valid' });
         next();
       });
     } else {
