@@ -27,7 +27,7 @@ export default {
                   res.status(201).json({ user: 'successfully registered!', token });
                 });
               })
-              .catch(error => res.status(400).send(error.message));
+              .catch(error => res.send(error.message));
           })
         .catch( error => res.status(400).send(error));
 
@@ -45,7 +45,7 @@ export default {
           res.status(202).json({ user: 'loggedin successfully', token });
         });
       })
-      .catch(() => res.status(401).send({ message: 'user not registered!' }));
+      .catch((err) => res.status(401).send({ message: 'user not registered!' }));
   },
 
   // admin to list all users

@@ -15,6 +15,12 @@ const newUser = {
 	membership: 'Gold'
 };
 
+const fakeUserEmail = {
+	email: 'jacksonegmail.com',
+	username: 'sammatinddss',
+	password: '22384938ss999',
+	membership: 'Gold'
+}
 const oldUser = {
 	username: 'sammatins',
 	password: '22384938999',
@@ -54,12 +60,27 @@ describe('Routes', () => {
                 });
         });
 
+
         it('POST Api -- Should not register a user twice ', function (done) {
             chai.request(app)
             	.post('/api/users/signup')
             	.type('form')
                 .send(newUser)
                 .end((err, res) => {
+                    expect(res.status).to.equal(400);
+                    expect(res.body).to.have.property('message')
+                        .eql('Username or email already registered!');
+                    done();
+                });
+        });
+
+        it('POST Api -- Should not signup a user with wrongEmailFormat', function (done) {
+            chai.request(app)
+            	.post('/api/users/signup')
+            	.type('form')
+                .send(newUser)
+                .end((err, res) => {
+                    userToken = res.body.token;
                     expect(res.status).to.equal(400);
                     expect(res.body).to.have.property('message')
                         .eql('Username or email already registered!');
