@@ -9,14 +9,14 @@ let userToken;
 let adminToken;
 
 const newUser = {
-	email: 'jacksonyd5he@gmail.com',
-	username: 'sammyJddmatins',
+	email: 'jacksone@gmail.com',
+	username: 'sammatins',
 	password: '22384938999',
 	membership: 'Gold'
 };
 
 const oldUser = {
-	username: 'sammyJddmatins',
+	username: 'sammatins',
 	password: '22384938999',
 };
 
@@ -38,6 +38,7 @@ const fakeUser = {
 
 describe('Routes', () => {
 	describe('ENDPOINT FOR USERS/ADMIN SIGNUP AND SIGIN...', function () {
+
         it('POST Api -- Should signup a user ', function (done) {
             chai.request(app)
             	.post('/api/users/signup')
@@ -65,6 +66,21 @@ describe('Routes', () => {
                     done();
                 });
         });
+
+        it('POST Api -- Should signin a user', function (done) {
+            chai.request(app)
+            	.post('/api/users/signin')
+                .send(oldUser)
+                .end((err, res) => {
+                    userToken = res.body.token;
+                    expect(res.status).to.equal(202);
+                    expect(res.body).to.have.property('user')
+                        .eql('loggedin successfully');
+                    expect(res.body).to.have.property('token');
+                    done();
+                });
+        });
+
          
     });
 });
