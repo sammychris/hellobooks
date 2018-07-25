@@ -31,8 +31,8 @@ const fakeToken = `wljejwjeljwhewlmdnsjkldkls;jel
 						adhaldskdlsjldjs.esewsdds`;
 
 const fakeUser = {
-	username: 'esammenshek',
-	password: 'sldjskhehek',
+	username: 'esammenjjjsshek',
+	password: 'sldjsdhjdkhehek',
 }
 
 
@@ -77,6 +77,18 @@ describe('Routes', () => {
                     expect(res.body).to.have.property('user')
                         .eql('loggedin successfully');
                     expect(res.body).to.have.property('token');
+                    done();
+                });
+        });
+
+         it('POST Api -- Should not signin a fakeUser', function (done) {
+            chai.request(app)
+            	.post('/api/users/signin')
+                .send(fakeUser)
+                .end((err, res) => {
+                    expect(res.status).to.equal(400);
+                    expect(res.body).to.have.property('message')
+                        .eql('Wrong password or Username!');
                     done();
                 });
         });
