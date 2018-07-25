@@ -69,7 +69,7 @@ describe('Routes', () => {
             	.type('form')
                 .send(newUser)
                 .end((err, res) => {
-                    userToken = res.body.token;
+                    process.env.user = res.body.token;
                     expect(err).to.be.null;
                     expect(res.status).to.equal(201);
                     expect(res).to.be.json;
@@ -102,7 +102,6 @@ describe('Routes', () => {
             	.type('form')
                 .send(newUser)
                 .end((err, res) => {
-                    userToken = res.body.token;
                     expect(err).to.be.ok;
                     expect(res).to.have.status(400);
                     expect(res).to.be.json;
@@ -117,7 +116,7 @@ describe('Routes', () => {
             	.post('/api/users/signin')
                 .send(oldUser)
                 .end((err, res) => {
-                    userToken = res.body.token;
+                    process.env.user = res.body.token;
                     expect(err).to.be.null;
                     expect(res.status).to.equal(202);
                     expect(res).to.be.json;
@@ -147,7 +146,7 @@ describe('Routes', () => {
             	.post('/api/users/signin')
                 .send(adminUser)
                 .end((err, res) => {
-                    adminToken = res.body.token;
+                    process.env.admin = res.body.token;
                     expect(err).to.be.null;
                     expect(res.status).to.equal(202);
                     expect(res).to.be.json;
@@ -178,7 +177,7 @@ describe('Routes', () => {
 	 	 it('GET Api -- user Should View allbooks', function (done) {
             chai.request(app)
             	.get('/api/books')
-                .set('x-access-token', userToken)
+                .set('x-access-token', process.env.user)
                 .end((err, res) => {
                 	 expect(err).to.be.null;
                 	 expect(res).to.have.headers;
@@ -191,7 +190,7 @@ describe('Routes', () => {
 	 	 it('GET Api -- user Should find a book', function (done) {
             chai.request(app)
             	.get('/api/books/3')
-                .set('x-access-token', userToken)
+                .set('x-access-token', process.env.user)
                 .end((err, res) => {
                 	 expect(err).to.be.null;
                 	 expect(res).to.have.headers;
@@ -201,10 +200,10 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('GET Api -- user Should find Invalid book Id', function (done) {
+	 	 it('GET Api -- user Should find Invalid bookId', function (done) {
             chai.request(app)
             	.get('/api/books/500')
-                .set('x-access-token', userToken)
+                .set('x-access-token', process.env.user)
                 .end((err, res) => {
                 	 expect(err).to.be.ok;
                 	 expect(res).to.have.headers;
@@ -218,7 +217,7 @@ describe('Routes', () => {
 	 	 it('GET Api -- admin Should add a book', function (done) {
             chai.request(app)
             	.post('/api/books')
-                .set('x-access-token', adminToken)
+                .set('x-access-token', process.env.admin)
                 .send(book)
                 .end((err, res) => {
                 	 expect(err).to.be.null;
@@ -232,7 +231,7 @@ describe('Routes', () => {
 	 	 it('GET Api -- admin Should modify a book', function (done) {
             chai.request(app)
             	.put('/api/books/5')
-                .set('x-access-token', adminToken)
+                .set('x-access-token', process.env.admin)
                 .send(book)
                 .end((err, res) => {
                 	 expect(err).to.be.null;
@@ -246,7 +245,7 @@ describe('Routes', () => {
 	 	 it('GET Api -- user Should borrow a book', function (done) {
             chai.request(app)
             	.post('/api/users/5/books')
-                .set('x-access-token', userToken)
+                .set('x-access-token', process.env.user)
                 .send(borrowBookById)
                 .end((err, res) => {
                 	 expect(err).to.be.null;
@@ -261,7 +260,7 @@ describe('Routes', () => {
 	 	 it('GET Api -- user Should view allborrowed books by a user', function (done) {
             chai.request(app)
             	.get('/api/users/5/books?return=false')
-                .set('x-access-token', userToken)
+                .set('x-access-token', process.env.user)
                 .end((err, res) => {
                 	 expect(err).to.be.null;
                 	 expect(res).to.have.headers;
@@ -274,7 +273,7 @@ describe('Routes', () => {
 	 	 it('GET Api -- admin Should view all user', function (done) {
             chai.request(app)
             	.get('/api/users/all')
-                .set('x-access-token', adminToken)
+                .set('x-access-token', process.env.admin)
                 .end((err, res) => {
                 	 expect(err).to.be.null;
                 	 expect(res).to.have.headers;
