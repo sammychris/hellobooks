@@ -47,6 +47,15 @@ const fakeUser = {
 	password: 'sldjsdhjdkhehek',
 }
 
+const book = {
+                    Tittle: 'The Book of John',
+                    Author: 'John the beloved',
+                    Category: 'Bible',
+                    Quantity: 3,
+                    Description: 'This book is God\'s word, and most powerful gift too man.'
+                };
+
+
 
 describe('Routes', () => {
 	describe('ENDPOINT FOR USERS/ADMIN SIGNUP AND SIGIN...', function () {
@@ -199,6 +208,20 @@ describe('Routes', () => {
                 	 expect(res).to.have.status(404);
                 	 expect(res).to.be.json;
                 	 expect(res.body).to.equal('Invalid ID')
+                	 done();
+                });
+        });
+
+	 	 it('GET Api -- Should add a book', function (done) {
+            chai.request(app)
+            	.post('/api/books')
+                .set('x-access-token', adminToken)
+                .send(book)
+                .end((err, res) => {
+                	 expect(err).to.be.null;
+                	 expect(res).to.have.headers;
+                	 expect(res).to.have.status(201);
+                	 expect(res).to.be.json;
                 	 done();
                 });
         });
