@@ -1,6 +1,4 @@
 
-
-
 export const newUser = {
 				email: 'jacksone@gmail.com',
 				username: 'sammatins',
@@ -46,5 +44,5 @@ export const book = {
                 };
 
 export const borrowBookById = { 
-						bookId : 5
-					};
+								bookId : 5
+							};
