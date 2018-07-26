@@ -1,12 +1,11 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../server/app';
+import  { borrowBookById } from '../mockData';
+
 
 chai.use(chaiHttp);
 const { expect } = chai;
-const borrowBookById = { 
-						bookId : 5
-					};
 
 describe('verifyToken', () => {
 

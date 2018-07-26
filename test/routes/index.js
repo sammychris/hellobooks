@@ -2,62 +2,22 @@ import nock from 'nock';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../../server/app';
+import  {
+		newUser,
+		fakeUserEmail,
+		oldUser,
+		adminUser,
+		fakeAdmin,
+		fakeUser,
+		book,
+		borrowBookById
+} from '../mockData';
+
+
 
 chai.use(chaiHttp);
 const { expect } = chai;
-let userToken;
-let adminToken;
 
-const newUser = {
-	email: 'jacksone@gmail.com',
-	username: 'sammatins',
-	password: '22384938999',
-	membership: 'Gold'
-};
-
-const fakeUserEmail = {
-	email: 'jacksonegmail.com',
-	username: 'sammatinddss',
-	password: '22384938ss999',
-	membership: 'Gold'
-}
-const oldUser = {
-	username: 'sammatins',
-	password: '22384938999',
-};
-
-const adminUser = {
-	username: 'sammatins',
-	password: '22384938999',
-	admin: true
-};
-
-const fakeAdmin = {
-	username:'dlkksjldjlsj0',
-	password: 'dldidkshdls',
-	admin: true
-}
-
-const fakeToken = `wljejwjeljwhewlmdnsjkldkls;jel
-						jhlashdlhslhdsel.s,d.dsds
-						adhaldskdlsjldjs.esewsdds`;
-
-const fakeUser = {
-	username: 'esammenjjjsshek',
-	password: 'sldjsdhjdkhehek',
-}
-
-const book = {
-                    Tittle: 'The Book of John',
-                    Author: 'John the beloved',
-                    Category: 'Bible',
-                    Quantity: 3,
-                    Description: 'This book is God\'s word, and most powerful gift too man.'
-                };
-
-const borrowBookById = { 
-						bookId : 5
-					};
 
 
 describe('Routes', () => {
