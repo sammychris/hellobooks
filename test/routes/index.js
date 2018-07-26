@@ -204,7 +204,7 @@ describe('Routes', () => {
 
 	 	 it('GET Api -- user Should borrow a book', function (done) {
             chai.request(app)
-            	.post('/api/users/5/books')
+            	.post('/api/users/8/books')
                 .set('x-access-token', process.env.user)
                 .send(borrowBookById)
                 .end((err, res) => {

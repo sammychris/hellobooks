@@ -1,7 +1,7 @@
 
 export const newUser = {
-				email: 'jacksone@gmail.com',
-				username: 'sammatins',
+				email: 'ahhghkhjkj@gmail.com',
+				username: 'Jacsjkjkjonmuron',
 				password: '22384938999',
 				membership: 'Gold'
 		};
@@ -44,5 +44,5 @@ export const book = {
                 };
 
 export const borrowBookById = { 
-								bookId : 5
+								bookId : 2
 							};
