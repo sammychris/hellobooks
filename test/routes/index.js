@@ -10,7 +10,8 @@ import  {
 		fakeAdmin,
 		fakeUser,
 		book,
-		borrowBookById
+		borrowBookById,
+        fakeBook
 } from '../mockData';
 
 
@@ -148,6 +149,7 @@ describe('Routes', () => {
    });
 
 	 describe('ENDPOINT FOR BOOKS and USERS...', function () {
+
 	 	 it('GET Api -- user Should View allbooks', function (done) {
             chai.request(app)
             	.get('/api/books')
@@ -202,6 +204,20 @@ describe('Routes', () => {
                 });
         });
 
+         it('POSt Api -- admin Should not post fakebook a book', function (done) {
+            chai.request(app)
+                .post('/api/books')
+                .set('x-access-token', process.env.admin)
+                .send(fakeBook)
+                .end((err, res) => {
+                     expect(err).to.be.ok;
+                     expect(res).to.have.headers;
+                     expect(res).to.have.status(400);
+                     expect(res).to.be.json;
+                     done();
+                });
+        });
+
 	 	 it('GET Api -- admin Should modify a book', function (done) {
             chai.request(app)
             	.put('/api/books/5')
@@ -225,7 +241,7 @@ describe('Routes', () => {
                 	 expect(err).to.be.null;
                 	 expect(res).to.have.headers;
                 	 expect(res).to.have.status(201);
-                	 expect(res).to.be.json;
+                	 expect(res).to.be.html;
                 	 done();
                 });
         });
