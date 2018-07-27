@@ -57,11 +57,16 @@ export const fakeBook = {
 export const borrowBookById = { 
 								bookId : 2
 							};
-							
+
 export const InvalidSignupUser = {
 				email: 'sammmy@gmail.com',
 				username: 'grreetme',
 				password: '22384938999'
+		};
+
+export const InvalidSignInUser = {
+				username: 0,
+				password: 678989898787878
 		};
 
 function randomString(v){

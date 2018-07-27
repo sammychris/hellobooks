@@ -12,7 +12,8 @@ import  {
 		book,
 		borrowBookById,
         fakeBook,
-        InvalidSignupUser
+        InvalidSignupUser,
+        InvalidSignInUser
 } from '../mockData';
 
 
@@ -111,6 +112,18 @@ describe('Routes', () => {
                     expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
                         .eql('Wrong password or Username!');
+                    done();
+                });
+        });
+
+         it('Should not signin a invalid credentials', function (done) {
+            chai.request(app)
+                .post('/api/users/signin')
+                .send(InvalidSignInUser)
+                .end((err, res) => {
+                    expect(err).to.be.ok;
+                    expect(res.status).to.equal(401);
+                    expect(res).to.be.json;
                     done();
                 });
         });
