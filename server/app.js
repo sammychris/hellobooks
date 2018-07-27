@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 routes(app);
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-app.get('*', (req, res) => res.status(404).send({
+app.get(/.*/, (req, res) => res.status(404).send({
   message: '404 Page not found.',
 }));
 
