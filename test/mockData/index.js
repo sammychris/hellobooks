@@ -1,7 +1,11 @@
 
+
+const genEmail = `${randomString("ebusameric")}@gmail.com`;
+const genUsername  = `${randomString("samuelchristopher")}`;
+
 export const newUser = {
-				email: 'ahhghkhjkj@gmail.com',
-				username: 'Jacsjkjkjonmuron',
+				email: genEmail,
+				username: genUsername,
 				password: '22384938999',
 				membership: 'Gold'
 		};
@@ -46,3 +50,15 @@ export const book = {
 export const borrowBookById = { 
 								bookId : 2
 							};
+
+function randomString(v){
+    let newString = '';
+    let arr = v.split('');
+	let len = arr.length;
+	for(let i = 0; i < len; i++){
+	   let len = arr.length;
+       let random = Math.round(Math.random() * arr.length);
+	   newString += arr.splice(random,1);
+    }
+    return newString + arr.join('');
+}
