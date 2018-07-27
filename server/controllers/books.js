@@ -30,7 +30,7 @@ export default {
         if(!result) return res.status(404).json('Invalid bookID');
         return result.update(req.body).then(output => res.status(201).send(output))
       })
-      .catch(error => res.send(error));
+      .catch(error => res.status(500).send(error));
   },
 
   findAbook(req, res) {
@@ -39,6 +39,6 @@ export default {
         if(!result) return res.status(404).json('Invalid bookID');
         res.status(200).send(result)
       })
-      .catch(error => res.send(error));
+      .catch(error => res.status(500).send(error));
   },
 };
