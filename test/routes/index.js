@@ -24,7 +24,7 @@ describe('Routes', () => {
 	describe('ENDPOINT FOR USERS/ADMIN SIGNUP AND SIGIN...', function () {
 
 
-        it('GET Api -- Should test for anything route ', function (done) {
+        it('GET Api -- Should test for any Fake route ', function (done) {
             chai.request(app)
                 .get('/anything')
                 .end((err, res) => {

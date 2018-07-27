@@ -87,7 +87,7 @@ export default {
             }
             bookIns.update({ Quantity : bookIns.Quantity-1 }); // UPDATE Quantity by decrement
             bookHistory.create({ userId, bookId })
-              .then(bookHisT => res.status(201).send(bookHisT))
+              .then(bookHisT => res.status(201).send({message:'book borrowed successfully!'}))
               .catch(error => res.status(400).send(error));
           })
           .catch(error => res.status(500).send(error));
