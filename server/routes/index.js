@@ -8,10 +8,6 @@ const { verifyUser, verifyAdmin } = auth;
 
 
 export default (app) => {
-  app.get('/api', (req, res) => res.status(200).send({
-    message: 'Welcome to the Todos API!',
-  }));
-
   app.post('/api/users/signup', createUser);
   app.post('/api/users/signin', signInUser);
   app.get('/api/books', verifyUser, list);                 // list all book
