@@ -24,12 +24,12 @@ describe('Routes', () => {
 	describe('ENDPOINT FOR USERS/ADMIN SIGNUP AND SIGIN...', function () {
 
 
-        it('POST Api -- Should test for anything route ', function (done) {
+        it('GET Api -- Should test for anything route ', function (done) {
             chai.request(app)
-                .get('/api/anything')
+                .get('/anything')
                 .end((err, res) => {
-                    expect(err).to.be.null;
-                    expect(res.status).to.equal(200);
+                    expect(err).to.be.ok;
+                    expect(res.status).to.equal(404);
                     expect(res).to.be.json;
                     expect(res.body).to.have.property('message')
                         .eql('404 Page not found.');
