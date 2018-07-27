@@ -11,7 +11,8 @@ import  {
 		fakeUser,
 		book,
 		borrowBookById,
-        fakeBook
+        fakeBook,
+        InvalidSignupUser
 } from '../mockData';
 
 
@@ -25,7 +26,7 @@ describe('Routes', () => {
 	describe('ENDPOINT FOR USERS/ADMIN SIGNUP AND SIGIN...', function () {
 
 
-        it('GET Api -- Should test for any Fake route ', function (done) {
+        it('Should test for any Fake route ', function (done) {
             chai.request(app)
                 .get('/anything')
                 .end((err, res) => {
@@ -38,7 +39,7 @@ describe('Routes', () => {
                 });
         });
 
-        it('POST Api -- Should signup a user ', function (done) {
+        it('Should signup a user ', function (done) {
             chai.request(app)
             	.post('/api/users/signup')
             	.type('form')
@@ -56,7 +57,7 @@ describe('Routes', () => {
         });
 
 
-        it('POST Api -- Should not register a user twice ', function (done) {
+        it('Should not register a user twice ', function (done) {
             chai.request(app)
             	.post('/api/users/signup')
             	.type('form')
@@ -71,22 +72,20 @@ describe('Routes', () => {
                 });
         });
 
-        it('POST Api -- Should not signup a user with wrongEmailFormat', function (done) {
+        it('Should not signup a user with incomplete credentials', function (done) {
             chai.request(app)
             	.post('/api/users/signup')
             	.type('form')
-                .send(newUser)
+                .send(InvalidSignupUser)
                 .end((err, res) => {
                     expect(err).to.be.ok;
                     expect(res).to.have.status(400);
                     expect(res).to.be.json;
-                    expect(res.body).to.have.property('message')
-                        .eql('Username or email already registered!');
                     done();
                 });
         });
 
-        it('POST Api -- Should signin a user', function (done) {
+        it('Should signin a user', function (done) {
             chai.request(app)
             	.post('/api/users/signin')
                 .send(oldUser)
@@ -102,7 +101,7 @@ describe('Routes', () => {
                 });
         });
 
-         it('POST Api -- Should not signin a fakeUser', function (done) {
+         it('Should not signin a fakeUser', function (done) {
             chai.request(app)
             	.post('/api/users/signin')
                 .send(fakeUser)
@@ -116,7 +115,7 @@ describe('Routes', () => {
                 });
         });
 
-        it('POST Api -- Should signin admin', function (done) {
+        it('Should signin admin', function (done) {
             chai.request(app)
             	.post('/api/users/signin')
                 .send(adminUser)
@@ -132,7 +131,7 @@ describe('Routes', () => {
                 });
         });
 
-        it('POST Api -- Should not signin a fakeAdmin', function (done) {
+        it('Should not signin a fakeAdmin', function (done) {
             chai.request(app)
             	.post('/api/users/signin')
                 .send(fakeAdmin)
@@ -150,7 +149,7 @@ describe('Routes', () => {
 
 	 describe('ENDPOINT FOR BOOKS and USERS...', function () {
 
-	 	 it('GET Api -- user Should View allbooks', function (done) {
+	 	 it('user Should View allbooks', function (done) {
             chai.request(app)
             	.get('/api/books')
                 .set('x-access-token', process.env.user)
@@ -163,7 +162,21 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('GET Api -- user Should find a book', function (done) {
+         it('Should server error Viewing allbooks', function (done) {
+
+            chai.request(app)
+                .get('/api/books')
+                .set('x-access-token', process.env.user)
+                .end((err, res) => {
+                     expect(err).to.be.null;
+                     expect(res).to.have.headers;
+                     expect(res).to.have.status(200);
+                     expect(res).to.be.json;
+                     done();
+                });
+        });
+
+	 	 it('user Should find a book', function (done) {
             chai.request(app)
             	.get('/api/books/3')
                 .set('x-access-token', process.env.user)
@@ -176,7 +189,7 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('GET Api -- user Should find Invalid bookId', function (done) {
+	 	 it('Should find Invalid bookId', function (done) {
             chai.request(app)
             	.get('/api/books/500')
                 .set('x-access-token', process.env.user)
@@ -190,7 +203,23 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('GET Api -- admin Should add a book', function (done) {
+
+         it('Should not find string bookId', function (done) {
+            chai.request(app)
+                .get('/api/books/Invalidstirng')
+                .set('x-access-token', process.env.user)
+                .send(book)
+                .end((err, res) => {
+                     expect(err).to.be.ok;
+                     expect(res).to.have.headers;
+                     expect(res).to.have.status(500);
+                     expect(res).to.be.json;
+                     done();
+                });
+        });
+
+
+	 	 it('admin Should add a book', function (done) {
             chai.request(app)
             	.post('/api/books')
                 .set('x-access-token', process.env.admin)
@@ -204,7 +233,7 @@ describe('Routes', () => {
                 });
         });
 
-         it('POSt Api -- admin Should not post fakebook a book', function (done) {
+         it('admin Should not add fakeBook a book', function (done) {
             chai.request(app)
                 .post('/api/books')
                 .set('x-access-token', process.env.admin)
@@ -218,7 +247,7 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('GET Api -- admin Should modify a book', function (done) {
+	 	 it('Should modify a book', function (done) {
             chai.request(app)
             	.put('/api/books/5')
                 .set('x-access-token', process.env.admin)
@@ -232,7 +261,37 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('GET Api -- user Should borrow a book', function (done) {
+
+         it('Should not modify Invalid book Id', function (done) {
+            chai.request(app)
+                .put('/api/books/199')
+                .set('x-access-token', process.env.admin)
+                .send(book)
+                .end((err, res) => {
+                     expect(err).to.be.ok;
+                     expect(res).to.have.headers;
+                     expect(res).to.have.status(404);
+                     expect(res).to.be.json;
+                     expect(res.body).to.equal('Invalid bookID');
+                     done();
+                });
+        });
+
+         it('Should not modify book with stringId', function (done) {
+            chai.request(app)
+                .put('/api/books/Invalidstirng')
+                .set('x-access-token', process.env.admin)
+                .send(book)
+                .end((err, res) => {
+                     expect(err).to.be.ok;
+                     expect(res).to.have.headers;
+                     expect(res).to.have.status(500);
+                     expect(res).to.be.json;
+                     done();
+                });
+        });
+
+	 	 it('user Should borrow a book', function (done) {
             chai.request(app)
             	.post('/api/users/8/books')
                 .set('x-access-token', process.env.user)
@@ -247,7 +306,7 @@ describe('Routes', () => {
         });
 
 
-	 	 it('GET Api -- user Should view allborrowed books by a user', function (done) {
+	 	 it('user Should view allborrowed books by a user', function (done) {
             chai.request(app)
             	.get('/api/users/5/books?return=false')
                 .set('x-access-token', process.env.user)
@@ -260,7 +319,7 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('GET Api -- admin Should view all user', function (done) {
+	 	 it('admin Should view all user', function (done) {
             chai.request(app)
             	.get('/api/users/all')
                 .set('x-access-token', process.env.admin)
