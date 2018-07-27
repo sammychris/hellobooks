@@ -47,6 +47,14 @@ export const book = {
                     Description: 'This book is God\'s word, and most powerful gift too man.'
                 };
 
+export const fakeBook = {
+                    Tittle: 'The Book of John',
+                    Author: 'John the beloved',
+                    Category: 'Bible',
+                    Quantity: 3,
+                    Description: 'This book is God\'s word, and most powerful gift too man.'
+                };
+
 export const borrowBookById = { 
 								bookId : 2
 							};
