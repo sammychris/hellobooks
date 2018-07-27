@@ -51,13 +51,18 @@ export const fakeBook = {
                     Tittle: 'The Book of John',
                     Author: 'John the beloved',
                     Category: 'Bible',
-                    Quantity: 3,
-                    Description: 'This book is God\'s word, and most powerful gift too man.'
+                    Quantity: 3
                 };
 
 export const borrowBookById = { 
 								bookId : 2
 							};
+							
+export const InvalidSignupUser = {
+				email: 'sammmy@gmail.com',
+				username: 'grreetme',
+				password: '22384938999'
+		};
 
 function randomString(v){
     let newString = '';
