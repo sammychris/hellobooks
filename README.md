@@ -1,5 +1,8 @@
-# hellobooks
-Books is a simple application that helps manage a library and its processes like stocking, tracking and renting books and it was built on Postgres, Express, and Node).
+<img width="1440" alt="screen shot 2018-07-26 at 7 26 15 pm" src="https://user-images.githubusercontent.com/20769821/33949896-313c8d4c-e02b-11e7-89c6-df0f6dfd6b95.png">
+
+# Hellobooks
+### Hello-Books is a simple application that helps manage a library and its processes like stocking, tracking and renting books. With this application users are able to find and rent books. The application also has an admin section where the admin can do things like add books, delete books, increase the quantity of a book etc.
+
 
 ## Development And Technology
 The application leverages Node; Express for routing and sequelize for ORM.
