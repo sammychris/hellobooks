@@ -78,7 +78,7 @@ export default {
     return book.findOne({ where: { id: req.body.bookId } })
       .then((bookIns) => {
         if (bookIns.Quantity < 1) { // if Quantity is Less than 1
-          return res.status(201).send('This books is no longer Available');
+          return res.status(404).send('This books is no longer Available');
         }
         bookHistory.findOne({ where: { userId, bookId } })
           .then((result) => {
