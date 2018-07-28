@@ -368,6 +368,20 @@ describe('Routes', () => {
 
 
 
+         it('Should return error 400 badRequest userId as string', function (done) {
+            chai.request(app)
+                .post('/api/users/InvalidStringId/books')
+                .set('x-access-token', process.env.user)
+                .send({ bookId: 4 })
+                .end((err, res) => {
+                     expect(err).to.be.ok;
+                     expect(res).to.have.headers;
+                     expect(res).to.have.status(500);
+                     expect(res).to.be.json;
+                     done();
+                });
+        });
+
 	 	 it('user Should view allborrowed books by a user', function (done) {
             chai.request(app)
             	.get('/api/users/5/books?return=false')
