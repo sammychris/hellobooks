@@ -83,7 +83,7 @@ export default {
         bookHistory.findOne({ where: { userId, bookId } })
           .then((result) => {
             if (result && !result.bookReturned) { // if this book exists in history and not returned
-              return res.status(201).send('You\'ve already borrowed this book');
+              return res.status(403).send('You\'ve already borrowed this book');
             }
             bookIns.update({ Quantity : bookIns.Quantity-1 }); // UPDATE Quantity by decrement
             bookHistory.create({ userId, bookId })
