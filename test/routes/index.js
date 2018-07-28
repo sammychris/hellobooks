@@ -13,7 +13,8 @@ import  {
 		borrowBookById,
         fakeBook,
         InvalidSignupUser,
-        InvalidSignInUser
+        InvalidSignInUser,
+        singleBookId
 } from '../mockData';
 
 
@@ -315,6 +316,21 @@ describe('Routes', () => {
                 	 expect(res).to.have.status(201);
                 	 expect(res).to.be.html;
                 	 done();
+                });
+        });
+
+     
+         it('Should not borrow a book that is not available', function (done) {
+            chai.request(app)
+                .post('/api/users/8/books')
+                .set('x-access-token', process.env.user)
+                .send(singleBookId)
+                .end((err, res) => {
+                     expect(err).to.be.ok;
+                     expect(res).to.have.headers;
+                     expect(res).to.have.status(404);
+                     expect(res).to.be.html;
+                     done();
                 });
         });
 
