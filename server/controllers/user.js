@@ -75,7 +75,7 @@ export default {
     const userId = req.params.userId;
     const bookId = req.body.bookId;
 
-    return book.findOne({ where: { id: req.body.bookId } })
+    return book.findById( req.body.bookId )
       .then((bookIns) => {
         if (bookIns.Quantity < 1) { // if Quantity is Less than 1
           return res.status(404).send('This books is no longer Available');
@@ -92,7 +92,7 @@ export default {
           })
           .catch(error => res.status(500).send(error));
       })
-      .catch(error => res.status(500).send(error));
+      .catch(error => res.status(400).send(error));
   },
 
 
