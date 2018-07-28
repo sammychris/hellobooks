@@ -58,6 +58,10 @@ export const borrowBookById = {
 								bookId : 2
 							};
 
+export const singleBookId = { 
+								bookId : 58
+							};
+
 export const InvalidSignupUser = {
 				email: 'sammmy@gmail.com',
 				username: 'grreetme',
