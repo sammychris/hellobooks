@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">57.41% </span>
+        <span class="strong">64.15% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>31/54</span>
+        <span class='fraction'>34/53</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">70% </span>
+        <span class="strong">80% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>14/20</span>
+        <span class='fraction'>16/20</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">54.55% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>11/22</span>
+        <span class='fraction'>12/22</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">59.18% </span>
+        <span class="strong">66.67% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>29/49</span>
+        <span class='fraction'>32/48</span>
       </div>
     </div>
     <p class="quiet">
@@ -162,8 +162,7 @@
 <a name='L114'></a><a href='#L114'>114</a>
 <a name='L115'></a><a href='#L115'>115</a>
 <a name='L116'></a><a href='#L116'>116</a>
-<a name='L117'></a><a href='#L117'>117</a>
-<a name='L118'></a><a href='#L118'>118</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L117'></a><a href='#L117'>117</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
@@ -206,7 +205,6 @@
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -238,22 +236,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
@@ -322,7 +320,6 @@ export default {
     const userC = (req.body.admin)? 'admin': 'user';
     return user.findOne({ where: { username: req.body.username, password: req.body.password } })
       .then((eachUser) =&gt; {
-        console.log(eachUser)
         if (!eachUser) return res.status(400).send({message:'Wrong password or Username!'});
         jwt.sign({ eachUser }, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) =&gt; {
           <span class="missing-if-branch" title="if path not taken" >I</span>if (err) <span class="cstat-no" title="statement not covered" >return console.log(err);</span>
@@ -360,17 +357,17 @@ export default {
 &nbsp;
     return book.findOne({ where: { id: req.body.bookId } })
       .then((bookIns) =&gt; {
-        <span class="missing-if-branch" title="if path not taken" >I</span>if (bookIns.Quantity &lt; 1) { // if Quantity is Less than 1
-<span class="cstat-no" title="statement not covered" >          return res.status(201).send('This books is no longer Available');</span>
+        if (bookIns.Quantity &lt; 1) { // if Quantity is Less than 1
+          return res.status(404).send('This books is no longer Available');
         }
         bookHistory.findOne({ where: { userId, bookId } })
           .then((result) =&gt; {
-            <span class="missing-if-branch" title="else path not taken" >E</span>if (result &amp;&amp; !result.bookReturned) { // if this book exists in history and not returned
-              return res.status(201).send('You\'ve already borrowed this book');
+            if (result &amp;&amp; !result.bookReturned) { // if this book exists in history and not returned
+              return res.status(403).send('You\'ve already borrowed this book');
             }
-<span class="cstat-no" title="statement not covered" >            bookIns.update({ Quantity : bookIns.Quantity-1 }); </span>// UPDATE Quantity by decrement
-<span class="cstat-no" title="statement not covered" >            bookHistory.create({ userId, bookId })</span>
-              .then(<span class="fstat-no" title="function not covered" >bo</span>okHisT =&gt; <span class="cstat-no" title="statement not covered" >res.status(201).send({message:'book borrowed successfully!'}))</span>
+            bookIns.update({ Quantity : bookIns.Quantity-1 }); // UPDATE Quantity by decrement
+            bookHistory.create({ userId, bookId })
+              .then(bookHisT =&gt; res.status(201).send({message:'book borrowed successfully!'}))
               .catch(<span class="fstat-no" title="function not covered" >er</span>ror =&gt; <span class="cstat-no" title="statement not covered" >res.status(400).send(error))</span>;
           })
           .catch(<span class="fstat-no" title="function not covered" >er</span>ror =&gt; <span class="cstat-no" title="statement not covered" >res.status(500).send(error))</span>;
@@ -403,7 +400,7 @@ export default {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Jul 27 2018 18:21:18 GMT+0100 (W. Central Africa Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Jul 28 2018 03:47:36 GMT+0100 (W. Central Africa Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>
