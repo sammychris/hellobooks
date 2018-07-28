@@ -352,6 +352,22 @@ describe('Routes', () => {
         });
 
 
+         it('Should return error 400 badRequest bookId', function (done) {
+            chai.request(app)
+                .post('/api/users/8/books')
+                .set('x-access-token', process.env.user)
+                .send({ bookId:'swemdjsl' })
+                .end((err, res) => {
+                     expect(err).to.be.ok;
+                     expect(res).to.have.headers;
+                     expect(res).to.have.status(400);
+                     expect(res).to.be.json;
+                     done();
+                });
+        });
+
+
+
 	 	 it('user Should view allborrowed books by a user', function (done) {
             chai.request(app)
             	.get('/api/users/5/books?return=false')
