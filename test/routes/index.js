@@ -305,15 +305,32 @@ describe('Routes', () => {
                 });
         });
 
-	 	 it('user Should borrow a book', function (done) {
+         it('Should borrow a book', function (done) {
+            chai.request(app)
+                .post('/api/users/8/books')
+                .set('x-access-token', process.env.user)
+                .send({ bookId:99 })
+                .end((err, res) => {
+                     expect(err).to.be.null;
+                     expect(res).to.have.headers;
+                     expect(res).to.have.status(201);
+                     expect(res).to.be.json;
+                     expect(res.body).to.have.property('message')
+                        .eql('book borrowed successfully!')
+                     done();
+                });
+        });
+
+
+	 	 it('Should not borrow a book you already borrowed', function (done) {
             chai.request(app)
             	.post('/api/users/8/books')
                 .set('x-access-token', process.env.user)
                 .send(borrowBookById)
                 .end((err, res) => {
-                	 expect(err).to.be.null;
+                	 expect(err).to.be.ok;
                 	 expect(res).to.have.headers;
-                	 expect(res).to.have.status(201);
+                	 expect(res).to.have.status(403);
                 	 expect(res).to.be.html;
                 	 done();
                 });
