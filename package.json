@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start:dev": "node ./build/bin/www.js",
     "start": "nodemon ./server/bin/www --exec babel-node -e js",
     "test": "babel-node node_modules/mocha/bin/_mocha -- test",
-    "build": "babel server/ -d build",
+    "build": "babel server/ -d build --copy-files",
     "lint": "eslint ./server",
     "lint:fix": "eslint ./server --fix",
     "coverage": "cross-env NODE_ENV=test nyc mocha test",
@@ -34,7 +35,8 @@
   },
   "dependencies": {
     "babel": "^6.23.0",
-     "babel-cli": "^6.24.1",
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.7.0",
     "body-parser": "^1.17.2",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.7.0",
@@ -51,7 +53,6 @@
   "devDependencies": {
     "babel-plugin-istanbul": "^4.1.6",
     "babel-plugin-rewire": "^1.1.0",
-    "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.1",
