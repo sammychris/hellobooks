@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "nodemon ./server/bin/www --exec babel-node -e js",
-    "start": "node ./lib/bin/www.js",
+    "start": "node ./build/bin/www.js",
     "test": "babel-node node_modules/mocha/bin/_mocha -- test",
     "build": "babel server/ -d build",
     "lint": "eslint ./server",
