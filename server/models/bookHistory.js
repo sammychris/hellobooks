@@ -5,11 +5,11 @@ export default (sequelize, DataTypes) => {
     userId: { type: DataTypes.INTEGER, allowNull: false },
     bookReturned: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: false }
   }, {
-      classMethods: {
+    classMethods: {
         associate: (models) => { // eslint-disable-line
-          // associations can be defined here
-        }
+        // associations can be defined here
       }
-    });
+    }
+  });
   return bookHistory;
 };

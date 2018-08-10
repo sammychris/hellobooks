@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start:dev": "node ./build/bin/www.js",
-    "start": "nodemon ./server/bin/www --exec babel-node -e js",
+    "start": "node ./build/bin/www",
+    "start:dev": "nodemon ./server/bin/www --exec babel-node -e js",
     "test": "babel-node node_modules/mocha/bin/_mocha -- test",
     "build": "babel server/ -d build --copy-files",
     "lint": "eslint ./server",

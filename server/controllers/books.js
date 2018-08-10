@@ -26,18 +26,18 @@ export default {
 
   modify(req, res) {
     return book.findById(req.params.bookId)
-      .then(result => {
-        if(!result) return res.status(404).json('Invalid bookID');
-        return result.update(req.body).then(output => res.status(201).send(output))
+      .then((result) => {
+        if (!result) return res.status(404).json('Invalid bookID');
+        return result.update(req.body).then(output => res.status(201).send(output));
       })
       .catch(error => res.status(500).send(error));
   },
 
   findAbook(req, res) {
     return book.findById(req.params.bookId)
-      .then(result => {
-        if(!result) return res.status(404).json('Invalid bookID');
-        res.status(200).send(result)
+      .then((result) => {
+        if (!result) return res.status(404).json('Invalid bookID');
+        res.status(200).send(result);
       })
       .catch(error => res.status(500).send(error));
   },
