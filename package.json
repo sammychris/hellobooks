@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./server/bin/www --exec babel-node -e js",
+    "start:dev": "nodemon ./server/bin/www --exec babel-node -e js",
+    "start": "node ./lib/bin/www.js",
     "test": "babel-node node_modules/mocha/bin/_mocha -- test",
-    "build": "babel server -d lib",
+    "build": "babel server/ -d build",
     "lint": "eslint ./server",
     "lint:fix": "eslint ./server --fix",
     "coverage": "cross-env NODE_ENV=test nyc mocha test",
