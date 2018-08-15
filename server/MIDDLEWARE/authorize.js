@@ -1,6 +1,7 @@
-// const dotenv = require('dotenv').config;
+import { config } from 'dotenv';
 import jwt from 'jsonwebtoken';
-// const secret = process.env.TOKEN_SECRET;
+
+config(); // configuring environment variables
 
 export default {
 
@@ -9,7 +10,7 @@ export default {
     const { headers } = req;
     const token = headers.authorization || headers['x-access-token'] || req.body.token;
     if (token) {
-      jwt.verify(token, 'userSecretKey', (err) => {
+      jwt.verify(token, process.env.USER_KEY, (err) => {
         if (err) return res.status(403).json('Token Is Not Valid');
         next();
       });
@@ -23,7 +24,7 @@ export default {
     const { headers } = req;
     const token = headers.authorization || headers['x-access-token'] || req.body.token;
     if (token) {
-      jwt.verify(token, 'adminSecretKey', (err) => {
+      jwt.verify(token, process.env.ADMIN_KEY, (err) => {
         if (err) return res.status(403).json({ message: 'Token Is Not Valid' });
         next();
       });
