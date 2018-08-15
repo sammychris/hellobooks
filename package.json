@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node ./build/bin/www",
+    "start": "cross-env NODE_ENV=production node ./build/bin/www",
     "start:dev": "cross-env NODE_ENV=development nodemon ./server/bin/www --exec babel-node -e js",
     "test": "babel-node node_modules/mocha/bin/_mocha -- test",
     "build": "cross-env NODE_ENV=production babel server/ -d build --copy-files",
