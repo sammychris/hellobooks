@@ -1,5 +1,8 @@
 import jwt from 'jsonwebtoken';
+import { config } from 'dotenv';
 import db from '../models';
+
+config(); //  configuring my environmental variable
 
 const { user, BookHistoryBorrowed, book } = db;
 const bookHistory = BookHistoryBorrowed;
@@ -22,7 +25,7 @@ export default {
         password: req.body.password,
         membership: req.body.membership,
       }).then((createUser) => {
-        jwt.sign({ createUser }, 'userSecretKey', { expiresIn: '1h' }, (err, token) => {
+        jwt.sign({ createUser }, process.env.USER_KEY, { expiresIn: '1h' }, (err, token) => {
           if (err) return console.log(err);
           res.status(201).json({ user: 'successfully registered!', token });
         });
@@ -34,15 +37,15 @@ export default {
 
 
   // signin user
-  signInUser(req, res) {
-    process.env.SECRET_KEY = (req.body.admin) ? 'adminSecretKey' : 'userSecretKey'; // creating a token for either the user or admin
-    const userC = (req.body.admin) ? 'admin' : 'user';
+  signInUser(req, res) { // creating a token for either the user or admin
+    const adminOrUser = (req.body.admin) ? process.env.ADMIN_KEY : process.env.USER_KEY;
+    const anyBody = (req.body.admin) ? 'admin' : 'user';
     return user.findOne({ where: { username: req.body.username, password: req.body.password } })
       .then((eachUser) => {
         if (!eachUser) return res.status(400).send({ message: 'Wrong password or Username!' });
-        jwt.sign({ eachUser }, process.env.SECRET_KEY, { expiresIn: '1h' }, (err, token) => {
+        jwt.sign({ eachUser }, adminOrUser, { expiresIn: '1h' }, (err, token) => {
           if (err) return console.log(err);
-          res.status(202).send({ message: `${userC} loggedin successfully`, token });
+          res.status(202).send({ message: `${anyBody} loggedin successfully`, token });
         });
       })
       .catch(err => res.status(401).send({ message: 'user not registered!' }));
